@@ -1,7 +1,7 @@
 # M0379 - Projecte Intermodular ASIX
 
 Aquest repositori conté el desenvolupament del mòdul **M0379 - Projecte Intermodular** del cicle formatiu de grau superior en **ASIX** (Administració de Sistemes Informàtics en Xarxa).
-Realitzat Per:
+Realitzat per els següents membres:
 - Alex Marquès Comas
 - Oleguer Esteo Martínez
 - Sergi Gallart Fanlo
