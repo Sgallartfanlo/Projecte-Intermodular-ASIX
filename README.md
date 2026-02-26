@@ -16,7 +16,7 @@ Metodologies i eines per a la planificació, seguiment i documentació del proje
 ## 2. Kubernetes - Bàsic
 
 Conceptes fonamentals, arquitectura i desplegament d'aplicacions en contenidors mitjançant orquestració amb Kubernetes.
-
+- [Enllaç al projecte](https://github.com/Sgallartfanlo/Projecte-Intermodular-ASIX/tree/main/Kubernetes%20B%C3%A0sic "Enllaç al projecte")
 ## 3. IDS / IPS (Snort, Wazuh, Suricata)
 
 Implementació i configuració de sistemes de detecció i prevenció d'intrusions per a la millora de la seguretat en xarxa.
