@@ -24,7 +24,7 @@ Implementació i configuració de sistemes de detecció i prevenció d'intrusion
 ## 4. Monitorització de xarxes (Zabbix, Cacti, Nagios)
 
 Configuració de plataformes de monitorització per al control de l'estat, rendiment i disponibilitat dels serveis i dispositius de xarxa.
-
+- [Enllaç al projecte](https://github.com/Sgallartfanlo/Projecte-Intermodular-ASIX/tree/main/Monitoritzaci%C3%B3%20de%20xarxes%20(Zabbix%2C%20Cacti%2C%20Nagios) "Enllaç al projecte")
 ## 5. Implementació d'un configurador de hosting
 
 Desenvolupament i posada en marxa d'una eina per a la gestió automatitzada d'entorns d'allotjament web.
