@@ -28,3 +28,4 @@ Configuració de plataformes de monitorització per al control de l'estat, rendi
 ## 5. Implementació d'un configurador de hosting
 
 Desenvolupament i posada en marxa d'una eina per a la gestió automatitzada d'entorns d'allotjament web.
+- [Enllaç al projecte](https://github.com/Sgallartfanlo/Projecte-Intermodular-ASIX/tree/main/Implementaci%C3%B3%20d'un%20configurador%20de%20hosting "Enllaç al projecte")
