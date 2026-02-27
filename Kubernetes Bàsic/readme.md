@@ -88,6 +88,7 @@ Docker Compose, en canvi, està orientat a la definició d’aplicacions multi-c
 
 ## Disseny d’arquitectura
 ![Draw.io](img/arquitectura.jpg)
+
 L’arquitectura de ShopMicro en entorn Docker Compose està estructurada en tres capes: accés, backend i persistència. El frontend és l’únic servei exposat al port 80, mentre que la resta de microserveis es comuniquen a través de xarxes internes. Les bases de dades, Redis i RabbitMQ es troben a la capa de dades, garantint l’aïllament i la seguretat del sistema.
 
 ---
