@@ -8,13 +8,6 @@
 **Sergi Gallart Fanlo**  
 **Àlex Marqués Comas**
 
----
-
-# Índex
-
-
----
-
 # Fase 1: Docker Compose — Entorn de Desenvolupament
 
 ## Introducció Docker Compose
