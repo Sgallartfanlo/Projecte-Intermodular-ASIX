@@ -1,92 +1,107 @@
-1) Instalamos Apache y MariaDB
-sudo apt install apache2 mariadb-server -y
+1. Instal·lem Apache i MariaDB
+   sudo apt install apache2 mariadb-server -y
 
-2) Agregamos repositorio para php
+2. Afegim el repositori per a PHP
 
 sudo apt install ca-certificates apt-transport-https software-properties-common
-add-apt-repository ppa:ondrej/php
+sudo add-apt-repository ppa:ondrej/php
 
-3) Realizamos actualizacion de paquetes
-sudo apt update -y && sudo apt upgrade -y
+3. Fem l’actualització dels paquets
+   sudo apt update -y && sudo apt upgrade -y
 
-4) Instalamos PHP 8 o 8.1 y extensiones
+4. Instal·lem PHP 8 o 8.1 i les extensions
+
 PHP8
-apt install php8.0 libapache2-mod-php8.0 php8.0-common php8.0-fpm php8.0-cgi php8.0-bcmath php8.0-gd php8.0-imap php8.0-intl php8.0-apcu php8.0-cli php8.0-mbstring php8.0-curl php8.0-mysql php8.0-xml unzip -y
+sudo apt install php8.0 libapache2-mod-php8.0 php8.0-common php8.0-fpm php8.0-cgi php8.0-bcmath php8.0-gd php8.0-imap php8.0-intl php8.0-apcu php8.0-cli php8.0-mbstring php8.0-curl php8.0-mysql php8.0-xml unzip -y
+
 PHP8.1
-apt install php8.1 libapache2-mod-php8.1 php8.1-common php8.1-fpm php8.1-cgi php8.1-bcmath php8.1-gd php8.1-imap php8.1-intl php8.1-apcu php8.1-cli php8.1-mbstring php8.1-curl php8.1-mysql php8.1-xml unzip -y
+sudo apt install php8.1 libapache2-mod-php8.1 php8.1-common php8.1-fpm php8.1-cgi php8.1-bcmath php8.1-gd php8.1-imap php8.1-intl php8.1-apcu php8.1-cli php8.1-mbstring php8.1-curl php8.1-mysql php8.1-xml unzip -y
 
-apt install php8.3 libapache2-mod-php8.3 php8.3-common php8.3-fpm php8.3-cgi php8.3-bcmath php8.3-gd php8.3-imap php8.3-intl php8.3-apcu php8.3-cli php8.3-mbstring php8.3-curl php8.3-mysql php8.3-xml unzip -y
+PHP8.3
+sudo apt install php8.3 libapache2-mod-php8.3 php8.3-common php8.3-fpm php8.3-cgi php8.3-bcmath php8.3-gd php8.3-imap php8.3-intl php8.3-apcu php8.3-cli php8.3-mbstring php8.3-curl php8.3-mysql php8.3-xml unzip -y
 
+5. Comprovem la instal·lació de PHP
+   php -v i reiniciem Apache
 
-5) comprobamos instalacion de php
-php -v y reiniciamos apache 
+sudo systemctl restart apache2
 
-sudo service apache2 restart
+7. Permetre l’accés a MySQL des de fora del local
+   Editar aquest fitxer i modificar la línia:
+   bind-address = 0.0.0.0
 
-7)Acceder fuera del local mysql
-editar ese archivo y colocar esto
-donde dice : bind-address = 0.0.0.0
 sudo nano /etc/mysql/mariadb.conf.d/50-server.cnf
 
+------------------DOCUMENTACIÓ ZABBIX---------------------------------------
 
-------------------ZABBIX DOCUMENTACION---------------------------------------
- Instalar el repositorio de Zabbix
-documentación
-# wget https://repo.zabbix.com/zabbix/6.4/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.4-1+ubuntu22.04_all.deb
-# dpkg -i zabbix-release_6.4-1+ubuntu22.04_all.deb
-# apt update
-b. Instala el servidor, la interfaz y el agente de Zabbix
-# apt install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-sql-scripts zabbix-agent
-c. Crear base de datos inicial
-documentación
-Make sure you have database server up and running.
+a) Instal·lar el repositori de Zabbix
 
-Ejecuta lo siguiente en el host de base de datos.
+sudo wget [https://repo.zabbix.com/zabbix/6.4/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.4-1+ubuntu22.04_all.deb](https://repo.zabbix.com/zabbix/6.4/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.4-1+ubuntu22.04_all.deb)
+sudo dpkg -i zabbix-release_6.4-1+ubuntu22.04_all.deb
+sudo apt update
 
-# mysql -uroot -p
+b) Instal·lar el servidor, la interfície i l’agent de Zabbix
+
+sudo apt install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-sql-scripts zabbix-agent
+
+c) Crear la base de dades inicial
+
+Assegura’t que el servidor de base de dades està en funcionament.
+
+Executa el següent al host de la base de dades:
+
+sudo mysql -uroot -p
 password
 mysql> create database zabbix character set utf8mb4 collate utf8mb4_bin;
 mysql> create user zabbix@localhost identified by 'password';
 mysql> grant all privileges on zabbix.* to zabbix@localhost;
 mysql> set global log_bin_trust_function_creators = 1;
 mysql> quit;
-En el servidor Zabbix, importe el esquema y los datos iniciales. Se le pedirá que ingrese la contraseña recién creada.
 
-# zcat /usr/share/zabbix-sql-scripts/mysql/server.sql.gz | mysql --default-character-set=utf8mb4 -uzabbix -p zabbix
-Disable log_bin_trust_function_creators option after importing database schema.
+Al servidor Zabbix, importa l’esquema i les dades inicials. Es demanarà la contrasenya creada anteriorment.
 
-# mysql -uroot -p
+sudo zcat /usr/share/zabbix-sql-scripts/mysql/server.sql.gz | mysql --default-character-set=utf8mb4 -uzabbix -p zabbix
+
+Desactivar l’opció log_bin_trust_function_creators després d’importar l’esquema:
+
+sudo mysql -uroot -p
 password
 mysql> set global log_bin_trust_function_creators = 0;
 mysql> quit;
-d. Configurar la base de datos para el servidor Zabbix
-Editar archivo /etc/zabbix/zabbix_server.conf
+
+d) Configurar la base de dades per al servidor Zabbix
+
+Editar el fitxer:
+
+sudo nano /etc/zabbix/zabbix_server.conf
+
+Modificar la línia:
 
 DBPassword=password
-e. Inicia los procesos del agente y del servidor Zabbix
-Inicia los procesos del agente y del servidor Zabbix y configúralos para que se inicien con el sistema.
 
-# systemctl restart zabbix-server zabbix-agent apache2
-# systemctl enable zabbix-server zabbix-agent apache2
-f. Open Zabbix UI web page
-The default URL for Zabbix UI when using Apache web server is http://host/zabbix
+e) Iniciar els processos de l’agent i del servidor Zabbix
 
-------------SOLUCIONAR ERROR DE LENGUAJE----------------------------------------
+sudo systemctl restart zabbix-server zabbix-agent apache2
+sudo systemctl enable zabbix-server zabbix-agent apache2
 
-ERROR LENGUAJE LUEGO DE INSTALAR ZABBIX
+f) Obrir la interfície web de Zabbix
+
+La URL per defecte de la interfície web de Zabbix amb Apache és:
+
+[http://host/zabbix](http://host/zabbix)
+
+------------SOLUCIONAR ERROR D’IDIOMA----------------------------------------
+
+ERROR D’IDIOMA DESPRÉS D’INSTAL·LAR ZABBIX
 
 sudo dpkg-reconfigure locales
-Elegir en_US.utf8
-systemctl restart zabbix-server.service
-systemctl restart zabbix-agent.service
-systemctl restart apache2
+Escollir en_US.utf8
 
+sudo systemctl restart zabbix-server.service
+sudo systemctl restart zabbix-agent.service
+sudo systemctl restart apache2
 
+-------------NOTES REPOSITORIS ZABBIX A UBUNTU ARM----------------
 
--------------NOTAS REPOSITORIOS ZABBIX EN UBUNTU ARM----------------
-sudo wget https://repo.zabbix.com/zabbix/6.2/ubuntu-arm64/pool/main/z/zabbix-release/zabbix-release_6.2-2%2Bubuntu22.04_all.deb
+sudo wget [https://repo.zabbix.com/zabbix/6.2/ubuntu-arm64/pool/main/z/zabbix-release/zabbix-release_6.2-2%2Bubuntu22.04_all.deb](https://repo.zabbix.com/zabbix/6.2/ubuntu-arm64/pool/main/z/zabbix-release/zabbix-release_6.2-2%2Bubuntu22.04_all.deb)
 sudo dpkg -i zabbix-release_6.2-2+ubuntu22.04_all.deb
 sudo apt update
-
-
-
