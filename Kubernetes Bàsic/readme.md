@@ -102,7 +102,7 @@ L’`api-gateway` actua com a punt d’entrada únic cap als microserveis, mentr
 ## Desplegament i verificació
 
 Abans de desplegar, hem creat la estructura de MicroShop bàsica per tal de poder desplegar els serveis sense problemes.  
-→ Directoris [https://github.com/Sgallartfanlo/Projecte-Intermodular-ASIX/tree/main/Kubernetes%20B%C3%A0sic/fase%201]
+→ [Directoris](https://github.com/Sgallartfanlo/Projecte-Intermodular-ASIX/tree/main/Kubernetes%20B%C3%A0sic/fase%201)
 
 Per desplegar el `docker-compose.yml` que hem creat, s’ha de fer servir la comanda:
 
