@@ -71,6 +71,7 @@ Un cop haguem accedit dins de la màquina haurem d'iniciar sessiò
 ![Sistema](img/Loginputty.png)
 
 *Iniciem sessiò amb les credencials de l'usuari*
+
 ![Sistema](img/Iniciputty.png)
 
 *Demostrem que hem accedit*
