@@ -48,28 +48,40 @@ Execució de les tasques de fons.
 ![Sistema](img/Sistema.png)
 *Vista del log d'instal·lació mentre el sistema s'escriu al disc.*
 
-## 9. Finalització
+## 9. Iniciar Màquina
 Iniciar sessiò dins de la màquina
 ![Sistema](img/Inici.png)
 *Entrem dins de la màquina amba les credencials que li hem configurat durant l'instal·laciò*
----
 
-## ✍ Comandes Utilitzades
+## 10.Comprovació d'adreça IP
+A l'entrar a la màquina executem la següent comanda per consultar l'adreça IP de la màquina:
+```bash
+   ip a
+```
+![Sistema](img/IP.png)
+*Comprovem l'adreça IP de la màquina*
 
-Un cop finalitzada la instal·lació, s'han utilitzat els següents comandaments per a la verificació i actualització del sistema:
+## 11.Accès amb Putty
+Per facilitat i comoditat accedirem a la màquina mitjançant SSH, ho farem amb la eina Putty
+![Sistema](img/Putty.png)
+*Dins del putty posem l'adreça IP de la màquina per a connectar-nos*
 
-1. **Consultar l'adreça IP:**
-   ```bash
-   ip address
+## 12.Inici de sessiò de la màquina amb Putty
+Un cop haguem accedit dins de la màquina haurem d'iniciar sessiò
+![Sistema](img/Loginputty.png)
+*Iniciem sessiò amb les credencials de l'usuari*
+![Sistema](img/Iniciputty.png)
+*Demostrem que hem accedit*
 
-2. **Accedir com a superusuari (root):**
+## 13.Accedir amb el superusuari i actualitzar paquets
+Seguidament accedirem com a superusuari amb la següent comanda:
 ```bash
 sudo -i
-
 ```
-
-3. **Actualitzar la llista de repositoris i el sistema:**
+I Actualitzem la llista de repositoris i el sistema:
 ```bash
 apt update && apt upgrade -y
-
 ```
+![Sistema](img/Comandes.png)
+*Dins del putty posem l'adreça IP de la màquina per a connectar-nos*
+---
