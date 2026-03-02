@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>ShopMicro</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="container">
+    <h1>🛒 ShopMicro</h1>
+
+    <section class="card">
+      <h2>Productes</h2>
+      <button onclick="loadProducts()">Carrega productes</button>
+      <pre id="products"></pre>
+    </section>
+
+    <section class="card">
+      <h2>Comprar producte</h2>
+      <label>Product ID:</label>
+      <input id="pid" value="1">
+
+      <label>Quantitat:</label>
+      <input id="qty" value="1">
+
+      <button onclick="buy()">Comprar</button>
+      <pre id="orderResult"></pre>
+    </section>
+  </div>
+
+  <script>
+    async function loadProducts(){
+      const r = await fetch('/api/products');
+      const j = await r.json();
+      document.getElementById('products').textContent =
+        JSON.stringify(j, null, 2);
+    }
+
+    async function buy(){
+      const product_id = parseInt(document.getElementById('pid').value);
+      const qty = parseInt(document.getElementById('qty').value);
+
+      const r = await fetch('/api/orders', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({user_id: 1, product_id, qty})
+      });
+
+      const j = await r.json();
+      document.getElementById('orderResult').textContent =
+        JSON.stringify(j, null, 2);
+    }
+  </script>
+
+</body>
+</html>
