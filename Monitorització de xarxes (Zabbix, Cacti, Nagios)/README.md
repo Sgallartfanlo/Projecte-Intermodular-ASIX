@@ -12,35 +12,21 @@ La monitorització de xarxa consisteix en un conjunt de tècniques i eines per s
 
 ### Conceptes Claus
 
-* 
-**Objectiu:** Garantir que routers, switches, servidors i serveis web funcionin correctament.
+* **Objectiu:** Garantir que routers, switches, servidors i serveis web funcionin correctament.
 
 
-* 
-**Disponibilitat:** Percentatge de temps que un sistema està operatiu i accessible.
+* **Disponibilitat:** Percentatge de temps que un sistema està operatiu i accessible.
 
+* **Rendiment:** Mesurat a través de la latència, l'ample de banda i la pèrdua de paquets.
 
-* 
-**Rendiment:** Mesurat a través de la latència, l'ample de banda i la pèrdua de paquets.
+* **Alertes:** Notificacions automàtiques generades en detectar anomalies.
 
-
-* 
-**Alertes:** Notificacions automàtiques generades en detectar anomalies.
-
-
-* **Tipus de monitorització:**
-* 
+* **Tipus de monitorització:*** 
 **Activa:** Envia peticions (ping, consultes SNMP) als dispositius.
 
+* **Passiva:** Es basa en la recepció de logs o esdeveniments generats pels equips.
 
-* 
-**Passiva:** Es basa en la recepció de logs o esdeveniments generats pels equips.
-
-
-
-
-* 
-**Protocols comuns:** SNMP (per recollir dades de CPU, memòria i trànsit), ICMP (connectivitat) i agents específics.
+* **Protocols comuns:** SNMP (per recollir dades de CPU, memòria i trànsit), ICMP (connectivitat) i agents específics.
 
 
 
