@@ -7,22 +7,22 @@ Configuració inicial de l'idioma de l'instal·lador.
 
 ## 2. Actualització de l'instal·lador
 Gestió de versions del programari de base.
-![Actualització](img/Actualitzaciò.png)
+![Actualització](img/Actualitzacio.png)
 *S'ha decidit continuar sense actualitzar l'instal·lador a la versió 24.04.4.*
 
 ## 3. Tipus d'instal·lació
 Selecció del paquet de base del sistema.
-![Tipus d'instal·lació](img/Tipus_instalaciò.png)
+![Tipus d'instal·lació](img/Tipus_instal_lacio.png)
 *S'ha seleccionat la instal·lació estàndard d'Ubuntu Server.*
 
 ## 4. Configuració del teclat
 Distribució de tecles.
-![Teclat](img/Teclat_Idioma.png)
+![Teclat](img/Teclat.png)
 *Configurat en Spanish/Spanish per defecte.*
 
 ## 5. Emmagatzematge i Particionat
 Configuració del disc dur i LVM.
-![Configuració de disc](img/Disc.png)
+![Configuració de disc](img/Disc_1.png)
 *S'utilitza el disc sencer amb un grup LVM.*
 
 ![Resum de particions](img/Disc_2.png)
@@ -47,3 +47,13 @@ Instal·lació de programari addicional.
 Execució de les tasques de fons.
 ![Sistema](img/Sistema.png)
 *Vista del log d'instal·lació mentre el sistema s'escriu al disc.*
+
+---
+
+## ✍ COMANDOS UTILIZADOS
+
+Un cop finalitzada la instal·lació, s'han utilitzat els següents comandaments per a la verificació i actualització del sistema:
+
+1. **Consultar l'adreça IP:**
+   ```bash
+   ip address
