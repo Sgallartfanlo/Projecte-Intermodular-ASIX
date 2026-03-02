@@ -123,7 +123,7 @@ docker compose ps
 
 On podem veure que estan en **“Healthy”** gràcies al Docker Compose que hem fet.
 
-IMATGE
+![Draw.io](img/docker_ps.png)
 
 ---
 
