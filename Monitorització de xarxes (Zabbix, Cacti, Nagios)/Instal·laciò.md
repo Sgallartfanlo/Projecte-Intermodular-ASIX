@@ -1,9 +1,5 @@
 # Preparació del nou servidor amb Ubuntu Server 24.04 per a instal·lar Zabbix
 
-# Guia d'Instal·lació d'Ubuntu Server 24.04
-
-Aquest repositori conté la documentació visual dels passos seguits per a la configuració del servidor. Totes les captures es troben a la carpeta `/img`.
-
 ## 1. Selecció de l'idioma
 Configuració inicial de l'idioma de l'instal·lador.
 ![Selecció d'idioma](img/Idioma.png)
