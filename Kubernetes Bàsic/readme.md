@@ -151,6 +151,24 @@ Ara si li tornem a clicar al botó, ens mostrarà el mateix, però en comptes de
 
 ![Consulta des de Redis](img/flux1-redis.png)
 
+## Flux de creació de comanda
+
+Per començar aquesta proba, haurem de obrir dos terminals per captar els logs de “order-service” i “notification-service”.
+
+![Logs order-service i notification-service](img/flux2-logs-terminals.png)
+
+Tot seguit, tornem a obrir la web per comprar el producte amb id 1 i de quantitat 1.
+
+![Compra producte id 1 quantitat 1](img/flux2-compra.png)
+
+Just després de clicar el botó de compra, ens sortirà un altre json on ens indica el número de ordre:
+
+![Resposta JSON creació comanda](img/flux2-json-ordre.png)
+
+També ara els logs ens mostraran que s’ha efectuat la comanda amb més informació addicional, com per exemple la hora i el id.
+
+![Logs després de la compra](img/flux2-logs-resultat.png)
+
 # Webgrafia
 
 * Documentació oficial de Docker Compose:
