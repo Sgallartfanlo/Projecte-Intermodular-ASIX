@@ -36,18 +36,11 @@ La monitorització de xarxa consisteix en un conjunt de tècniques i eines per s
 
 La monitorització és vital per l'estabilitat i seguretat de les organitzacions. Els seus beneficis principals inclouen:
 
-* 
-**Detecció anticipada:** Identifica comportaments anòmals abans que esdevinguin errors crítics.
+* **Detecció anticipada:** Identifica comportaments anòmals abans que esdevinguin errors crítics.
 
+* **Gestió de recursos:** Ajuda a dimensionar la infraestructura i optimitzar costos analitzant tendències d'ús.
 
-* 
-**Gestió de recursos:** Ajuda a dimensionar la infraestructura i optimitzar costos analitzant tendències d'ús.
-
-
-* 
-**Seguretat:** Actua com a sistema d'alerta primerenca davant increments inesperats de trànsit o intents d'accés fallits.
-
-
+* **Seguretat:** Actua com a sistema d'alerta primerenca davant increments inesperats de trànsit o intents d'accés fallits.
 
 ---
 
