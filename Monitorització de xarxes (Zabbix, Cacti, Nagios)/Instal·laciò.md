@@ -6,7 +6,7 @@ Aquest repositori conté la documentació visual dels passos seguits per a la co
 
 ## 1. Selecció de l'idioma
 Configuració inicial de l'idioma de l'instal·lador.
-![Selecció d'idioma](img/Idiomapng.png)
+![Selecció d'idioma](img/Idioma.png)
 *Es tria l'espanyol per facilitar la lectura del procés.*
 
 ## 2. Actualització de l'instal·lador
@@ -61,7 +61,6 @@ Un cop finalitzada la instal·lació, s'han utilitzat els següents comandaments
 1. **Consultar l'adreça IP:**
    ```bash
    ip address
-
 
 2. **Accedir com a superusuari (root):**
 ```bash
