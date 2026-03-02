@@ -110,7 +110,7 @@ Per desplegar el `docker-compose.yml` que hem creat, s’ha de fer servir la com
 docker compose up -d
 ````
 
-![Draw.io](img/compose_up.png)
+![Docker Compose up](img/compose_up.png)
 
 
 ---
@@ -123,7 +123,7 @@ docker compose ps
 
 On podem veure que estan en **“Healthy”** gràcies al Docker Compose que hem fet.
 
-![Draw.io](img/docker_ps.png)
+![Docker ps](img/docker_ps.png)
 
 ---
 
@@ -133,7 +133,7 @@ Una altre manera de veure que tot ha sortit bé, és mirant els logs. Per fer-ho
 docker compose logs
 ```
 
-IMATGE
+![Logs](img/logs.png)
 
 ---
 # Webgrafia
