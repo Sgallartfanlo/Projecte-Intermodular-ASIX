@@ -136,6 +136,21 @@ docker compose logs
 ![Logs](img/logs.png)
 
 ---
+
+## Flux de consulta de productes
+
+Primer de tot, per comprovar aquest flux accedirem al frontend:
+
+![Accés al frontend](img/flux1-frontend.png)
+
+Tot seguit, li donarem un cop al botó de “Carrega productes” i veurem que ens mostra un json de el Mysql:
+
+![Consulta des de MySQL](img/flux1-mysql.png)
+
+Ara si li tornem a clicar al botó, ens mostrarà el mateix, però en comptes de amb el mysql, serà amb el Redis. Ja que el mysql haurà guardat el contingut dins el Redis. És a dir que el sistema buscarà al cache per tal de evitar tornar a accedir dins la base de dades.
+
+![Consulta des de Redis](img/flux1-redis.png)
+
 # Webgrafia
 
 * Documentació oficial de Docker Compose:
