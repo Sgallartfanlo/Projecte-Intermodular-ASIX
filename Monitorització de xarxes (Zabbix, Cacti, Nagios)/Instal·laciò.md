@@ -54,7 +54,7 @@ Execució de les tasques de fons.
 
 ---
 
-## ✍ COMANDOS UTILIZADOS
+## ✍ Comandes Utilitzades
 
 Un cop finalitzada la instal·lació, s'han utilitzat els següents comandaments per a la verificació i actualització del sistema:
 
@@ -62,7 +62,6 @@ Un cop finalitzada la instal·lació, s'han utilitzat els següents comandaments
    ```bash
    ip address
 
-```
 
 2. **Accedir com a superusuari (root):**
 ```bash
@@ -70,22 +69,8 @@ sudo -i
 
 ```
 
-
 3. **Actualitzar la llista de repositoris i el sistema:**
 ```bash
 apt update && apt upgrade -y
-
-```
-
-
-
-```
-
----
-
-### Nota sobre els noms de fitxer:
-He utilitzat `%20` per als espais (com a `Disc%202.png`) perquè Markdown ho pugui llegir correctament. Assegura't que els fitxers estiguin dins d'una carpeta anomenada **`img`** al mateix nivell que el README.
-
-Necessites que t'ajudi a afegir alguna secció sobre la configuració de la xarxa o de Zabbix?
 
 ```
