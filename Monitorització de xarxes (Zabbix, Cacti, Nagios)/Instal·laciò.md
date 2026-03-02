@@ -83,5 +83,3 @@ I Actualitzem la llista de repositoris i el sistema:
 apt update && apt upgrade -y
 ```
 ![Sistema](img/Comandes.png)
-*Dins del putty posem l'adreça IP de la màquina per a connectar-nos*
----
