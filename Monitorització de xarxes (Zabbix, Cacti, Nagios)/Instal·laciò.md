@@ -1,31 +1,35 @@
 # Preparació del nou servidor amb Ubuntu Server 24.04 per a instal·lar Zabbix
 
+# Guia d'Instal·lació d'Ubuntu Server 24.04
+
+Aquest repositori conté la documentació visual dels passos seguits per a la configuració del servidor. Totes les captures es troben a la carpeta `/img`.
+
 ## 1. Selecció de l'idioma
 Configuració inicial de l'idioma de l'instal·lador.
-![Selecció d'idioma](img/Idioma.png)
+![Selecció d'idioma](img/Idiomapng.png)
 *Es tria l'espanyol per facilitar la lectura del procés.*
 
 ## 2. Actualització de l'instal·lador
 Gestió de versions del programari de base.
-![Actualització](img/Actualitzacio.png)
+![Actualització](img/Actualitzaciò.png)
 *S'ha decidit continuar sense actualitzar l'instal·lador a la versió 24.04.4.*
 
 ## 3. Tipus d'instal·lació
 Selecció del paquet de base del sistema.
-![Tipus d'instal·lació](img/Tipus_instal_lacio.png)
+![Tipus d'instal·lació](img/Tipus%20d'instal·laciò.png)
 *S'ha seleccionat la instal·lació estàndard d'Ubuntu Server.*
 
 ## 4. Configuració del teclat
 Distribució de tecles.
-![Teclat](img/Teclat.png)
+![Teclat](img/Teclat_Idioma.png)
 *Configurat en Spanish/Spanish per defecte.*
 
 ## 5. Emmagatzematge i Particionat
 Configuració del disc dur i LVM.
-![Configuració de disc](img/Disc_1.png)
+![Configuració de disc](img/Disc.png)
 *S'utilitza el disc sencer amb un grup LVM.*
 
-![Resum de particions](img/Disc_2.png)
+![Resum de particions](img/Disc%202.png)
 *Resum final de les particions creades, incloent /boot i el volum lògic.*
 
 ## 6. Perfil d'usuari
@@ -50,7 +54,7 @@ Execució de les tasques de fons.
 
 ---
 
-## ✍ Comandes Utilitzades
+## ✍ COMANDOS UTILIZADOS
 
 Un cop finalitzada la instal·lació, s'han utilitzat els següents comandaments per a la verificació i actualització del sistema:
 
@@ -77,6 +81,11 @@ apt update && apt upgrade -y
 
 ```
 
-Recorda que si vols acompanyar aquests comandaments amb captures de pantalla, només cal que les guardis a la carpeta `img/` i m'ho diguis per enllaçar-les!
+---
+
+### Nota sobre els noms de fitxer:
+He utilitzat `%20` per als espais (com a `Disc%202.png`) perquè Markdown ho pugui llegir correctament. Assegura't que els fitxers estiguin dins d'una carpeta anomenada **`img`** al mateix nivell que el README.
+
+Necessites que t'ajudi a afegir alguna secció sobre la configuració de la xarxa o de Zabbix?
 
 ```
