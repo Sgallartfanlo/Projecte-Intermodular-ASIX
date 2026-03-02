@@ -80,7 +80,7 @@ Docker Compose, en canvi, està orientat a la definició d’aplicacions multi-c
 ---
 
 ## Disseny d’arquitectura
-![Draw.io](img/arquitectura.jpg)
+![Draw.io](img/fase1/arquitectura.jpg)
 
 L’arquitectura de ShopMicro en entorn Docker Compose està estructurada en tres capes: accés, backend i persistència. El frontend és l’únic servei exposat al port 80, mentre que la resta de microserveis es comuniquen a través de xarxes internes. Les bases de dades, Redis i RabbitMQ es troben a la capa de dades, garantint l’aïllament i la seguretat del sistema.
 
@@ -110,7 +110,7 @@ Per desplegar el `docker-compose.yml` que hem creat, s’ha de fer servir la com
 docker compose up -d
 ````
 
-![Docker Compose up](img/compose_up.png)
+![Docker Compose up](img/fase1/compose_up.png)
 
 
 ---
@@ -123,7 +123,7 @@ docker compose ps
 
 On podem veure que estan en **“Healthy”** gràcies al Docker Compose que hem fet.
 
-![Docker ps](img/docker_ps.png)
+![Docker ps](img/fase1/docker_ps.png)
 
 ---
 
@@ -133,7 +133,7 @@ Una altre manera de veure que tot ha sortit bé, és mirant els logs. Per fer-ho
 docker compose logs
 ```
 
-![Logs](img/logs.png)
+![Logs](img/fase1/logs.png)
 
 ---
 
@@ -141,33 +141,33 @@ docker compose logs
 
 Primer de tot, per comprovar aquest flux accedirem al frontend:
 
-![Accés al frontend](img/flux1-frontend.png)
+![Accés al frontend](img/fase1/flux1-frontend.png)
 
 Tot seguit, li donarem un cop al botó de “Carrega productes” i veurem que ens mostra un json de el Mysql:
 
-![Consulta des de MySQL](img/flux1-mysql.png)
+![Consulta des de MySQL](img/fase1/flux1-mysql.png)
 
 Ara si li tornem a clicar al botó, ens mostrarà el mateix, però en comptes de amb el mysql, serà amb el Redis. Ja que el mysql haurà guardat el contingut dins el Redis. És a dir que el sistema buscarà al cache per tal de evitar tornar a accedir dins la base de dades.
 
-![Consulta des de Redis](img/flux1-redis.png)
+![Consulta des de Redis](img/fase1/flux1-redis.png)
 
 ## Flux de creació de comanda
 
 Per començar aquesta proba, haurem de obrir dos terminals per captar els logs de “order-service” i “notification-service”.
 
-![Logs order-service i notification-service](img/flux2-logs-terminals.png)
+![Logs order-service i notification-service](img/fase1/flux2-logs-terminals.png)
 
 Tot seguit, tornem a obrir la web per comprar el producte amb id 1 i de quantitat 1.
 
-![Compra producte id 1 quantitat 1](img/flux2-compra.png)
+![Compra producte id 1 quantitat 1](img/fase1/flux2-compra.png)
 
 Just després de clicar el botó de compra, ens sortirà un altre json on ens indica el número de ordre:
 
-![Resposta JSON creació comanda](img/flux2-json-ordre.png)
+![Resposta JSON creació comanda](img/fase1/flux2-json-ordre.png)
 
 També ara els logs ens mostraran que s’ha efectuat la comanda amb més informació addicional, com per exemple la hora i el id.
 
-![Logs després de la compra](img/flux2-logs-resultat.png)
+![Logs després de la compra](img/fase1/flux2-logs-resultat.png)
 
 # Webgrafia
 
