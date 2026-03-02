@@ -9,7 +9,7 @@ Configuració inicial de l'idioma de l'instal·lador.
 
 ## 2. Actualització de l'instal·lador
 Gestió de versions del programari de base.
-![Actualització](img/Actualitzacio.png)
+![Actualització](img/Actualitzaciò.png)
 *S'ha decidit continuar sense actualitzar l'instal·lador a la versió 24.04.4.*
 
 ## 3. Tipus d'instal·lació
@@ -19,12 +19,12 @@ Selecció del paquet de base del sistema.
 
 ## 4. Configuració del teclat
 Distribució de tecles.
-![Teclat](img/Teclat.png)
+![Teclat](img/Teclat_Idioma.png)
 *Configurat en Spanish/Spanish per defecte.*
 
 ## 5. Emmagatzematge i Particionat
 Configuració del disc dur i LVM.
-![Configuració de disc](img/Disc_1.png)
+![Configuració de disc](img/Disc.png)
 *S'utilitza el disc sencer amb un grup LVM.*
 
 ![Resum de particions](img/Disc_2.png)
