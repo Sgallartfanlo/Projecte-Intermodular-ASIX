@@ -94,11 +94,7 @@ El document analitza tres de les solucions de codi obert més rellevants:
  |
 | **Escalabilitat** | Alta (manual) 
 
- | Molt alta 
-
- | Mitjana 
-
- |
+ | Molt alta | Mitjana |
 
 ---
 
@@ -123,23 +119,12 @@ L'equip ha seleccionat **Zabbix** com l'eina més adequada per al projecte.
 
 ### Justificació de l'elecció
 
-1. 
-**Monitorització integral:** Combina dispositius de xarxa i servidors en una sola plataforma.
+1. **Monitorització integral:** Combina dispositius de xarxa i servidors en una sola plataforma.
 
 
-2. 
-**Agents propis:** Permeten obtenir mètriques detallades de l'estat del sistema.
+2. **Agents propis:** Permeten obtenir mètriques detallades de l'estat del sistema.
 
+3. **Gestió proactiva:** El seu sistema d'alertes avançat permet definir llindars personalitzats.
 
-3. 
-**Gestió proactiva:** El seu sistema d'alertes avançat permet definir llindars personalitzats.
-
-
-4. 
-**Escalabilitat i Visualització:** Ofereix gràfics i informes natius i pot créixer segons la infraestructura ho requereixi.
-
-
-
+4. **Escalabilitat i Visualització:** Ofereix gràfics i informes natius i pot créixer segons la infraestructura ho requereixi.
 ---
-
-**Voldries que t'ajudi a detallar com configurar algun dels protocols esmentats, com l'SNMP, dins de Zabbix?**
