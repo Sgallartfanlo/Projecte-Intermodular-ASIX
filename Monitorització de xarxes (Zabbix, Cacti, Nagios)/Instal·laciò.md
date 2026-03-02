@@ -12,7 +12,7 @@ Gestió de versions del programari de base.
 
 ## 3. Tipus d'instal·lació
 Selecció del paquet de base del sistema.
-![Tipus d'instal·lació](img/Tipus%20d'instal·laciò.png)
+![Tipus d'instal·lació](img/Tipus_instal·laciò.png)
 *S'ha seleccionat la instal·lació estàndard d'Ubuntu Server.*
 
 ## 4. Configuració del teclat
