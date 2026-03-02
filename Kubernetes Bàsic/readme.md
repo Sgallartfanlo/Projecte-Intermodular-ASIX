@@ -98,6 +98,44 @@ L’`api-gateway` actua com a punt d’entrada únic cap als microserveis, mentr
 
 ---
 
+
+## Desplegament i verificació
+
+Abans de desplegar, hem creat la estructura de MicroShop bàsica per tal de poder desplegar els serveis sense problemes.  
+→ Directoris ([https://github.com/Sgallartfanlo/Projecte-Intermodular-ASIX/tree/main/Kubernetes%20B%C3%A0sic/fase%201])
+
+Per desplegar el `docker-compose.yml` que hem creat, s’ha de fer servir la comanda:
+
+```bash
+docker compose up -d
+````
+
+![Draw.io](img/compose_up.png)
+
+
+---
+
+Per verificar que tot el desplegament ha sortit correcte, utilitzarem la comanda:
+
+```bash
+docker compose ps
+```
+
+On podem veure que estan en **“Healthy”** gràcies al Docker Compose que hem fet.
+
+IMATGE
+
+---
+
+Una altre manera de veure que tot ha sortit bé, és mirant els logs. Per fer-ho farem servir la comanda:
+
+```bash
+docker compose logs
+```
+
+IMATGE
+
+---
 # Webgrafia
 
 * Documentació oficial de Docker Compose:
