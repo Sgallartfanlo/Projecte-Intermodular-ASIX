@@ -50,10 +50,33 @@ Execució de les tasques de fons.
 
 ---
 
-## ✍ COMANDOS UTILIZADOS
+## ✍ Comandes Utilitzades
 
 Un cop finalitzada la instal·lació, s'han utilitzat els següents comandaments per a la verificació i actualització del sistema:
 
 1. **Consultar l'adreça IP:**
    ```bash
    ip address
+
+```
+
+2. **Accedir com a superusuari (root):**
+```bash
+sudo -i
+
+```
+
+
+3. **Actualitzar la llista de repositoris i el sistema:**
+```bash
+apt update && apt upgrade -y
+
+```
+
+
+
+```
+
+Recorda que si vols acompanyar aquests comandaments amb captures de pantalla, només cal que les guardis a la carpeta `img/` i m'ho diguis per enllaçar-les!
+
+```
