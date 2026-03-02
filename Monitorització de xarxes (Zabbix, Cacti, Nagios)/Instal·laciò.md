@@ -48,6 +48,10 @@ Execució de les tasques de fons.
 ![Sistema](img/Sistema.png)
 *Vista del log d'instal·lació mentre el sistema s'escriu al disc.*
 
+## 9. Finalització
+Iniciar sessiò dins de la màquina
+![Sistema](img/Inici.png)
+*Entrem dins de la màquina amba les credencials que li hem configurat durant l'instal·laciò*
 ---
 
 ## ✍ Comandes Utilitzades
