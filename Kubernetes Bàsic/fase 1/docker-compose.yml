@@ -1,0 +1,150 @@
+version: "3.9"
+
+services:
+  
+  # BASES DE DADES
+
+  db-products:
+    image: mysql:8.0
+    container_name: db-products
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: productsdb
+    volumes:
+      - db_products_data:/var/lib/mysql
+    networks:
+      - data-net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  db-orders:
+    image: mysql:8.0
+    container_name: db-orders
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: ordersdb
+    volumes:
+      - db_orders_data:/var/lib/mysql
+    networks:
+      - data-net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # CACHE I CUA DE MISSATGES
+
+  cache:
+    image: redis:7
+    container_name: redis
+    networks:
+      - data-net
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  message-queue:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - data-net
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "check_running"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # MICROSERVEIS
+
+  product-service:
+    build: ./product-service
+    container_name: product-service
+    networks:
+      - backend-net
+      - data-net
+    depends_on:
+      db-products:
+        condition: service_healthy
+      cache:
+        condition: service_healthy
+
+  order-service:
+    build: ./order-service
+    container_name: order-service
+    networks:
+      - backend-net
+      - data-net
+    depends_on:
+      db-orders:
+        condition: service_healthy
+      db-products:
+        condition: service_healthy
+      message-queue:
+        condition: service_healthy
+
+  user-service:
+    build: ./user-service
+    container_name: user-service
+    networks:
+      - backend-net
+      - data-net
+    depends_on:
+      db-orders:
+        condition: service_healthy
+
+  notification-service:
+    build: ./notification-service
+    container_name: notification-service
+    networks:
+      - backend-net
+      - data-net
+    depends_on:
+      message-queue:
+        condition: service_healthy
+
+  # API GATEWAY
+
+  api-gateway:
+    build: ./api-gateway
+    container_name: api-gateway
+    networks:
+      - frontend-net
+      - backend-net
+    depends_on:
+      - product-service
+      - order-service
+      - user-service
+
+  # FRONTEND
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - "80:80"
+    networks:
+      - frontend-net
+    depends_on:
+      - api-gateway
+
+# XARXES
+
+networks:
+  frontend-net:
+  backend-net:
+  data-net:
+
+# VOLUMS
+
+volumes:
+  db_products_data:
+  db_orders_data:
+  rabbitmq_data:
