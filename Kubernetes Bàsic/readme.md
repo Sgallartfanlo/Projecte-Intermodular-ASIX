@@ -85,6 +85,18 @@ Docker Compose, en canvi, està orientat a la definició d’aplicacions multi-c
 L’arquitectura de ShopMicro en entorn Docker Compose està estructurada en tres capes: accés, backend i persistència. El frontend és l’únic servei exposat al port 80, mentre que la resta de microserveis es comuniquen a través de xarxes internes. Les bases de dades, Redis i RabbitMQ es troben a la capa de dades, garantint l’aïllament i la seguretat del sistema.
 
 ---
+## Creació Docker-Compose
+
+El codi complet del fitxer `docker-compose.yml` utilitzat en aquesta fase del projecte es troba disponible al repositori de GitHub següent:  
+--> [Docker-compose](https://github.com/Sgallartfanlo/Projecte-Intermodular-ASIX/blob/main/Kubernetes%20B%C3%A0sic/fase%201/docker-compose.yml)
+
+El fitxer `docker-compose.yml` defineix de forma declarativa tots els **serveis** que formen part de la plataforma **ShopMicro**, així com les xarxes i volums necessaris per al seu funcionament. Dins la secció `services` es configuren les bases de dades **MySQL**, el sistema de cache **Redis**, la cua de missatges **RabbitMQ**, els **microserveis** de negoci, l’`api-gateway` i el `frontend`.
+
+Les bases de dades i serveis de persistència s’executen a la xarxa `data-net` i disposen de **volums** per garantir la persistència de les dades. Els microserveis es connecten tant a `backend-net`, per comunicar-se entre ells, com a `data-net`, per accedir als serveis de dades. S’utilitza la directiva `depends_on` amb la condició `service_healthy` per assegurar que els serveis crítics estiguin operatius abans d’iniciar els microserveis dependents.
+
+L’`api-gateway` actua com a punt d’entrada únic cap als microserveis, mentre que el `frontend` és l’únic servei que exposa el port 80 al sistema amfitrió, permetent l’accés des del navegador. La segmentació en **tres xarxes** (`frontend-net`, `backend-net` i `data-net`) permet millorar l’aïllament, l’organització i la seguretat de l’arquitectura.
+
+---
 
 # Webgrafia
 
