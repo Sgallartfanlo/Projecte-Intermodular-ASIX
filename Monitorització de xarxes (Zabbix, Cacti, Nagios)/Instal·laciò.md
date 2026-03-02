@@ -67,7 +67,8 @@ Per facilitat i comoditat accedirem a la màquina mitjançant SSH, ho farem amb 
 *Dins del putty posem l'adreça IP de la màquina per a connectar-nos*
 
 ## 12.Inici de sessiò de la màquina amb Putty
-Un cop haguem accedit dins de la màquina haurem d'iniciar sessiò
+Un cop haguem accedit dins de la màquina haurem d'iniciar sessió
+
 ![Sistema](img/Loginputty.png)
 
 *Iniciem sessiò amb les credencials de l'usuari*
