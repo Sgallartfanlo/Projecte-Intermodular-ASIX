@@ -20,7 +20,7 @@ Conceptes fonamentals, arquitectura i desplegament d'aplicacions en contenidors 
 ## 3. IDS / IPS (Snort, Wazuh, Suricata)
 
 Implementació i configuració de sistemes de detecció i prevenció d'intrusions per a la millora de la seguretat en xarxa.
-
+- [Enllaç al projecte](https://github.com/Sgallartfanlo/Projecte-Intermodular-ASIX/tree/main/Implementaci%C3%B3%20d'un%20Sistema%20IDS "Enllaç al projecte")
 ## 4. Monitorització de xarxes (Zabbix, Cacti, Nagios)
 
 Configuració de plataformes de monitorització per al control de l'estat, rendiment i disponibilitat dels serveis i dispositius de xarxa.
