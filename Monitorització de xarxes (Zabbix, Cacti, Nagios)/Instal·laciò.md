@@ -2,7 +2,7 @@
 
 ## 1. Selecció de l'idioma
 Configuració inicial de l'idioma de l'instal·lador.
-![Selecció d'idioma](img/Idioma.png)
+![Selecció d'idioma](img/server/Idioma.png)
 *Es tria l'espanyol per facilitar la lectura del procés.*
 
 ## 2. Actualització de l'instal·lador
