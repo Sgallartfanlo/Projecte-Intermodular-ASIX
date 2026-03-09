@@ -382,7 +382,7 @@ podem observar que els serveis que anteriorment s’estaven executant al **Worke
 
 Això demostra que Docker Swarm manté el nombre de rèpliques actives encara que un node deixi de funcionar.
 
-![Redistribució dels serveis](img/swarm-redistribution.png)
+![Redistribució dels serveis](img/fase2/swarm-redistribution.png)
 
 ---
 
@@ -404,7 +404,7 @@ docker node ls
 
 Podem observar que el node **Worker 2** torna a aparèixer amb estat **Ready**, indicant que s’ha reincorporat correctament al clúster.
 
-![Node worker-2 recuperat](img/swarm-node-recovered.png)
+![Node worker-2 recuperat](img/fase2/swarm-node-recovered.png)
 
 ---
 
