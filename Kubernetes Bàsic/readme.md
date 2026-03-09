@@ -169,6 +169,120 @@ També ara els logs ens mostraran que s’ha efectuat la comanda amb més inform
 
 ![Logs després de la compra](img/fase1/flux2-logs-resultat.png)
 
+# Fase 2: Docker Swarm — Clúster d'Alta Disponibilitat
+
+## Inicialitzar clúster swarm al manager i unir els workers
+
+Primer de tot hem de instalar el Docker a les tres màquines.
+
+### Actualitzem paquets:
+
+```bash
+sudo apt update
+````
+
+### Instal·lem les dependències necessàries:
+
+```bash
+sudo apt install ca-certificates curl gnupg -y
+```
+
+### Creo el directori per guardar les claus del repositori:
+
+```bash
+sudo install -m 0755 -d /etc/apt/keyrings
+```
+
+### Afegim la clau GPG oficial de Docker:
+
+```bash
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | \
+sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+```
+
+### Afegim el repositori oficial de Docker:
+
+```bash
+echo \
+"deb [arch=$(dpkg --print-architecture) \
+signed-by=/etc/apt/keyrings/docker.gpg] \
+https://download.docker.com/linux/ubuntu \
+$(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+```
+
+### Ara ja podem instal·lar amb la següent comanda el Docker:
+
+```bash
+sudo apt update
+sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+```
+
+### Comprovem que s’ha instal·lat correctament:
+
+```bash
+docker --version
+```
+
+### Permetre utilitzar Docker sense sudo:
+
+```bash
+sudo usermod -aG docker $USER
+newgrp docker
+```
+
+---
+
+## Comprovació de connectivitat entre màquines
+
+Abans de començar amb el Swarm, hem de comprovar que les diferents màquines es veuen entre elles:
+
+```bash
+ping IP_DE_LA_ALTRA_MAQUINA
+```
+
+![Prova de connexió](img/fase2/pingmaquines.png)
+
+---
+
+## Inicialització del node manager
+
+El primer pas és inicialitzar el clúster des de la màquina que actuarà com a manager. El manager és el node encarregat de controlar el clúster, gestionar els serveis i decidir en quin node s’executaran els contenidors.
+
+Per iniciar el clúster es fa servir la següent comanda:
+
+```bash
+docker swarm init
+```
+
+Aquesta comanda converteix la màquina actual en el node manager del clúster Docker Swarm.
+
+Quan s’executa, Docker crea automàticament la configuració del clúster i genera un token d’unió que permetrà que altres nodes s’afegeixin al clúster com a workers.
+
+---
+
+## Afegir els nodes workers al clúster
+
+Un cop el manager ha estat inicialitzat, el següent pas és afegir les màquines workers al clúster. Els nodes workers són les màquines que executen els contenidors i serveis distribuïts pel manager.
+
+Per unir un node worker al clúster, cal executar a la màquina worker la comanda que ha proporcionat el manager:
+
+```bash
+docker swarm join --token TOKEN_DEL_MANAGER IP_DEL_MANAGER:2377
+```
+
+---
+
+## Verificació del clúster
+
+Per comprovar que totes les màquines s’han afegit correctament al clúster, es pot executar la següent comanda al node manager:
+
+```bash
+docker node ls
+```
+
+![Docker node ls](img/fase2/dockernodels.png)
+
 # Webgrafia
 
 * Documentació oficial de Docker Compose:
