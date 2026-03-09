@@ -63,7 +63,7 @@ services:
         parallelism: 1
 
   product-service:
-    build: ./product-service
+    image: product-service
     environment:
       DB_HOST: db-products
       DB_USER: root
@@ -82,7 +82,7 @@ services:
         parallelism: 1
 
   order-service:
-    build: ./order-service
+    image: order-service
     environment:
       DBP_HOST: db-products
       DBO_HOST: db-orders
@@ -103,7 +103,7 @@ services:
         parallelism: 1
 
   user-service:
-    build: ./user-service
+    image: user-service
     environment:
       DBO_HOST: db-orders
       DB_USER: root
@@ -120,7 +120,7 @@ services:
         parallelism: 1
 
   notification-service:
-    build: ./notification-service
+    image: notification-service
     environment:
       RABBIT_HOST: message-queue
       QUEUE_NAME: orders
@@ -135,7 +135,7 @@ services:
         parallelism: 1
 
   api-gateway:
-    build: ./api-gateway
+    image: api-gateway
     networks:
       - frontend-net
       - backend-net
@@ -149,7 +149,7 @@ services:
         parallelism: 1
 
   frontend:
-    build: ./frontend
+    image: frontend
     ports:
       - "80:80"
     networks:
