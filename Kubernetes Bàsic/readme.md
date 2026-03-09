@@ -326,7 +326,7 @@ Aquesta comanda mostra tots els serveis que formen part de la stack, així com e
 
 En aquesta sortida es pot observar que els microserveis disposen de múltiples rèpliques, tal com s’ha configurat dins del fitxer `docker-stack.yml`. Això permet millorar la disponibilitat del sistema i assegurar que el servei continuï funcionant encara que algun contenidor falli.
 
-![Serveis Docker Stack](img/docker-stack-services.png)
+![Serveis Docker Stack](img/fase2/docker-stack-services.png)
 
 ---
 
