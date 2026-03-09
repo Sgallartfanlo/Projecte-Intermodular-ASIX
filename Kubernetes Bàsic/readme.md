@@ -344,6 +344,78 @@ Gràcies a Docker Swarm, els contenidors es distribueixen automàticament entre 
 
 ![Distribució dels serveis al clúster](img/fase2/docker-stack-ps.png)
 
+## Prova de tolerància a fallades
+
+Per comprovar la tolerància a fallades del clúster Docker Swarm, es simula la caiguda d’un dels nodes worker. En aquest cas aturarem el node **Worker 2**.
+
+Primer de tot aturem el **Worker 2**. Per fer-ho executem la següent comanda dins del node `aos-worker-2`:
+
+```bash
+sudo systemctl stop docker
+```
+
+---
+
+### Comprovació de l'estat dels nodes
+
+Ara, des del node **manager**, executem la següent comanda per veure l’estat dels nodes del clúster:
+
+```bash
+docker node ls
+```
+
+En aquest moment podem observar que el node **Worker 2** apareix amb estat **Down**, indicant que ha deixat de participar temporalment en el clúster.
+
+![Node worker-2 en estat Down](img/fase2/swarm-node-down.png)
+
+---
+
+### Redistribució automàtica dels serveis
+
+Si ara executem la següent comanda:
+
+```bash
+docker stack ps shopmicro
+```
+
+podem observar que els serveis que anteriorment s’estaven executant al **Worker 2** s’han redistribuït automàticament entre els altres nodes disponibles del clúster, és a dir, el **manager** i el **worker-1**.
+
+Això demostra que Docker Swarm manté el nombre de rèpliques actives encara que un node deixi de funcionar.
+
+![Redistribució dels serveis](img/swarm-redistribution.png)
+
+---
+
+### Reincorporació del node al clúster
+
+Ara tornem a encendre el **Worker 2** per comprovar què passa amb els serveis que s’han redistribuït.
+
+Per fer-ho executem de nou la següent comanda dins del node `aos-worker-2`:
+
+```bash
+sudo systemctl start docker
+```
+
+Un cop fet això, tornem al node **manager** i executem:
+
+```bash
+docker node ls
+```
+
+Podem observar que el node **Worker 2** torna a aparèixer amb estat **Ready**, indicant que s’ha reincorporat correctament al clúster.
+
+![Node worker-2 recuperat](img/swarm-node-recovered.png)
+
+---
+
+### Comportament dels serveis després de la recuperació
+
+Tot i que el node **Worker 2** torna a estar actiu, els serveis que s’han redistribuït no tornen automàticament a aquest node.
+
+Això és perquè Docker Swarm ja està complint amb el nombre de rèpliques configurades per als serveis en els nodes que continuen funcionant.
+
+Els serveis només tornarien a redistribuir-se al **Worker 2** si es realitza una actualització del servei o si es modifica el nombre de rèpliques.
+
 
 # Webgrafia
 
