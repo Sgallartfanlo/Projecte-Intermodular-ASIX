@@ -300,6 +300,51 @@ La segmentació en tres xarxes (**frontend-net**, **backend-net** i **data-net**
 
 ---
 
+## Desplegament amb Docker Stack
+
+Un cop creat el fitxer `docker-stack.yml`, el següent pas és desplegar l’aplicació dins el clúster **Docker Swarm**. Aquest fitxer és una adaptació del `docker-compose.yml` utilitzat a la fase anterior, però incorpora directives específiques de Swarm com la gestió de rèpliques, les polítiques de reinici automàtic i les restriccions de desplegament dels serveis.
+
+Per desplegar la stack s’utilitza la següent comanda executada des del node **manager**:
+
+```bash
+docker stack deploy -c docker-stack.yml shopmicro
+```
+
+Aquesta comanda crea una stack anomenada **shopmicro** i desplega tots els serveis definits dins el fitxer `docker-stack.yml` al clúster Docker Swarm.
+
+---
+
+## Verificació dels serveis desplegats
+
+Per comprovar que tots els serveis s’han desplegat correctament es pot utilitzar la següent comanda:
+
+```bash
+docker stack services shopmicro
+```
+
+Aquesta comanda mostra tots els serveis que formen part de la stack, així com el nombre de rèpliques actives i el port exposat per cadascun d’ells.
+
+En aquesta sortida es pot observar que els microserveis disposen de múltiples rèpliques, tal com s’ha configurat dins del fitxer `docker-stack.yml`. Això permet millorar la disponibilitat del sistema i assegurar que el servei continuï funcionant encara que algun contenidor falli.
+
+![Serveis Docker Stack](img/docker-stack-services.png)
+
+---
+
+## Distribució dels serveis dins el clúster
+
+Per veure en quin node del clúster s’està executant cada rèplica dels serveis, es pot utilitzar la següent comanda:
+
+```bash
+docker stack ps shopmicro
+```
+
+Aquesta comanda mostra totes les tasques associades als serveis de la stack, indicant el node on s’està executant cada contenidor.
+
+Gràcies a Docker Swarm, els contenidors es distribueixen automàticament entre els diferents nodes del clúster (`aos-manager`, `aos-worker-1` i `aos-worker-2`). Això permet repartir la càrrega de treball i augmentar la tolerància a errors del sistema.
+
+![Distribució dels serveis al clúster](img/fase2/docker-stack-ps.png)
+
+
 # Webgrafia
 
 * Documentació oficial de Docker Compose:
