@@ -416,6 +416,49 @@ Això és perquè Docker Swarm ja està complint amb el nombre de rèpliques con
 
 Els serveis només tornarien a redistribuir-se al **Worker 2** si es realitza una actualització del servei o si es modifica el nombre de rèpliques.
 
+## Escalat en calent
+
+En aquesta última prova es realitza un **escalat en calent** del servei `product-service`.
+Això significa augmentar el nombre de rèpliques del servei mentre el sistema continua funcionant, sense necessitat d’aturar els contenidors existents.
+
+Per augmentar a **4** les rèpliques del servei `product-service`, executem la següent comanda des del node **manager**:
+
+```bash
+docker service scale shopmicro_product-service=4
+```
+
+Aquesta comanda indica a Docker Swarm que augmenti el nombre de contenidors actius per aquest servei fins a quatre.
+
+---
+
+### Verificació de l’escalat
+
+Per comprovar que el servei `product-service` s’ha escalat correctament a **4 rèpliques**, executem la següent comanda:
+
+```bash
+docker service ls
+```
+
+En aquesta sortida es pot observar que el servei `shopmicro_product-service` mostra **4/4 rèpliques actives**, indicant que els quatre contenidors estan en funcionament.
+
+![Escalat del product-service](img/fase2/swarm-scale-service.png)
+
+---
+
+### Distribució de les noves rèpliques
+
+Per veure com Docker Swarm ha distribuït les noves rèpliques entre els diferents nodes del clúster, utilitzem la comanda següent:
+
+```bash
+docker stack ps shopmicro
+```
+
+En aquesta sortida es pot observar que les quatre instàncies del servei `product-service` s’han repartit entre els nodes disponibles del clúster (`aos-manager`, `aos-worker-1` i `aos-worker-2`).
+
+Aquesta distribució permet repartir la càrrega del servei entre diferents màquines, millorant l’escalabilitat i la disponibilitat del sistema.
+
+![Distribució de les rèpliques del product-service](img/fase2/swarm-scale-distribution.png)
+
 
 # Webgrafia
 
