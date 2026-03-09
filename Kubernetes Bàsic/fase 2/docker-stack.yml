@@ -1,0 +1,172 @@
+version: "3.9"
+
+services:
+
+  db-products:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+    volumes:
+      - db_products_data:/var/lib/mysql
+      - ./db-products/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - data-net
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      restart_policy:
+        condition: on-failure
+      update_config:
+        parallelism: 1
+
+  db-orders:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+    volumes:
+      - db_orders_data:/var/lib/mysql
+      - ./db-orders/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - data-net
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      restart_policy:
+        condition: on-failure
+      update_config:
+        parallelism: 1
+
+  cache:
+    image: redis:7
+    networks:
+      - data-net
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      update_config:
+        parallelism: 1
+
+  message-queue:
+    image: rabbitmq:3-management
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - data-net
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      update_config:
+        parallelism: 1
+
+  product-service:
+    build: ./product-service
+    environment:
+      DB_HOST: db-products
+      DB_USER: root
+      DB_PASS: rootpassword
+      DB_NAME: productsdb
+      REDIS_HOST: cache
+      REDIS_TTL: 60
+    networks:
+      - backend-net
+      - data-net
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+      update_config:
+        parallelism: 1
+
+  order-service:
+    build: ./order-service
+    environment:
+      DBP_HOST: db-products
+      DBO_HOST: db-orders
+      DB_USER: root
+      DB_PASS: rootpassword
+      DBP_NAME: productsdb
+      DBO_NAME: ordersdb
+      RABBIT_HOST: message-queue
+      QUEUE_NAME: orders
+    networks:
+      - backend-net
+      - data-net
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+      update_config:
+        parallelism: 1
+
+  user-service:
+    build: ./user-service
+    environment:
+      DBO_HOST: db-orders
+      DB_USER: root
+      DB_PASS: rootpassword
+      DBO_NAME: ordersdb
+    networks:
+      - backend-net
+      - data-net
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+      update_config:
+        parallelism: 1
+
+  notification-service:
+    build: ./notification-service
+    environment:
+      RABBIT_HOST: message-queue
+      QUEUE_NAME: orders
+    networks:
+      - backend-net
+      - data-net
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      update_config:
+        parallelism: 1
+
+  api-gateway:
+    build: ./api-gateway
+    networks:
+      - frontend-net
+      - backend-net
+    ports:
+      - "8081:80"
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+      update_config:
+        parallelism: 1
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80"
+    networks:
+      - frontend-net
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+      update_config:
+        parallelism: 1
+
+networks:
+  frontend-net:
+  backend-net:
+  data-net:
+
+volumes:
+  db_products_data:
+  db_orders_data:
+  rabbitmq_data:
