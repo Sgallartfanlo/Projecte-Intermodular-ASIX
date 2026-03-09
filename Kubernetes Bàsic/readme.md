@@ -283,6 +283,23 @@ docker node ls
 
 ![Docker node ls](img/fase2/dockernodels.png)
 
+---
+
+## Creació Docker-Stack
+
+El codi complet del fitxer **docker-stack.yml** utilitzat en aquesta fase del projecte es troba disponible al repositori de GitHub següent: 
+--> [Docker-stack](https://github.com/Sgallartfanlo/Projecte-Intermodular-ASIX/blob/main/Kubernetes%20B%C3%A0sic/fase%202/docker-stack.yml)
+
+El fitxer **docker-stack.yml** defineix de forma declarativa tots els serveis que formen part de la plataforma ShopMicro adaptats per funcionar en un clúster de **Docker Swarm**. Dins la secció *services* es configuren les bases de dades MySQL, el sistema de cache Redis, la cua de missatges RabbitMQ, els microserveis de negoci, l’api-gateway i el frontend, igual que en la fase anterior amb Docker Compose.
+
+En aquesta fase s’han afegit directives pròpies de **Docker Swarm** dins la secció *deploy*. En primer lloc, s’ha configurat **deploy.replicas** per executar diverses instàncies dels microserveis, garantint així una major disponibilitat del sistema. També s’ha utilitzat **deploy.placement.constraints** per assegurar que els serveis de bases de dades s’executin sempre al node manager del clúster.
+
+A més, s’ha configurat **deploy.restart_policy** per reiniciar automàticament els contenidors en cas d’error i **deploy.update_config** per permetre actualitzacions progressives dels serveis mitjançant un sistema de *rolling update* amb paral·lelisme d’una rèplica cada vegada.
+
+La segmentació en tres xarxes (**frontend-net**, **backend-net** i **data-net**) es manté igual que en la fase anterior, permetent separar les capes de l’arquitectura i garantir una comunicació controlada entre els diferents serveis de la plataforma.
+
+---
+
 # Webgrafia
 
 * Documentació oficial de Docker Compose:
