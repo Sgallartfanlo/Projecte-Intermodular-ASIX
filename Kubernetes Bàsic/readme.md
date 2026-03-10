@@ -500,6 +500,110 @@ A més, el fitxer manté les credencials dins de la secció `environment`, la qu
 * `DB_PASS: rootpassword` a `user-service`
 * `DB_USER: root` a diversos serveis d’aplicació
 
+---
+
+# 14. Docker Secrets
+
+En aquesta fase s’han migrat totes les credencials del fitxer `docker-stack.yml` a **Docker Secrets**.
+
+L’objectiu és millorar la seguretat del clúster Docker Swarm evitant que les contrasenyes apareguin en text pla dins del fitxer de configuració o en variables d’entorn. Docker Secrets permet emmagatzemar informació sensible de forma segura i només la posa a disposició dels serveis que la necessiten.
+
+---
+
+## Creació del secret
+
+Des del node **manager** es crea el secret que contindrà la contrasenya de la base de dades amb la següent comanda:
+
+```bash
+echo "rootpassword" | docker secret create db_root_password -
+```
+
+Aquesta comanda crea un secret anomenat `db_root_password` dins del clúster Docker Swarm.
+
+![Creació Docker Secret](img/fase3/docker-secret.png)
+
+---
+
+## Verificació del secret
+
+Per comprovar que el secret s’ha creat correctament es pot utilitzar la comanda:
+
+```bash
+docker secret ls
+```
+
+Aquesta comanda mostra tots els secrets disponibles dins del clúster.
+
+![Llista Docker Secret](img/fase3/docker-secret-ls.png)
+
+---
+
+## Modificació del docker-stack.yml
+
+Un cop creat el secret, es modifica el fitxer `docker-stack.yml` per substituir les contrasenyes en text pla per l’ús del secret.
+
+Per exemple, en el servei de MySQL es substitueix la variable:
+
+```yaml
+MYSQL_ROOT_PASSWORD: rootpassword
+```
+
+per:
+
+```yaml
+MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
+```
+
+D’aquesta manera, el contenidor obté la contrasenya directament del secret gestionat per Docker.
+
+També s’ha afegit la secció `secrets` als serveis que necessiten accedir a la contrasenya.
+
+---
+
+## Redeplegament del stack
+
+Un cop modificat el fitxer de configuració, es torna a desplegar la stack amb la següent comanda:
+
+```bash
+docker stack deploy -c docker-stack.yml shopmicro
+```
+
+Aquesta comanda actualitza els serveis del clúster aplicant la nova configuració amb Docker Secrets.
+
+---
+
+## Verificació dels serveis
+
+Per comprovar que tots els serveis continuen funcionant correctament després dels canvis, es pot utilitzar la comanda:
+
+```bash
+docker stack services shopmicro
+```
+
+Aquesta comanda mostra l’estat dels serveis desplegats i el nombre de rèpliques actives de cadascun.
+
+![Serveis desplegats](img/fase3/serveis-desplegats.png)
+
+---
+
+## Verificació de l’ús del secret
+
+Finalment, es pot comprovar que la contrasenya ja no apareix en text pla inspeccionant un dels serveis amb la comanda:
+
+```bash
+docker service inspect shopmicro_db-products
+```
+
+En la configuració del servei es pot observar que la contrasenya es carrega des del fitxer del secret:
+
+```
+MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db_root_password
+```
+
+![Comprovació Docker Secret](img/fase3/comprovació-Docker-secret.png)
+
+---
+
 # Webgrafia
 
 * Documentació oficial de Docker Compose:
