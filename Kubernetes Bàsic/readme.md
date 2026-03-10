@@ -753,7 +753,8 @@ docker node inspect self
 
 Aquesta comanda mostra informació detallada del node actual dins del clúster Swarm, incloent dades sobre el certificat TLS utilitzat per a la seva autenticació.
 
-![Inspecció del certificat](img/fase3/docker-node-inspect.png)
+![Inspecció del certificat](img/fase3/docker-node-inspect1.png)
+![Inspecció del certificat](img/fase3/docker-node-inspect2.png)
 
 ---
 
