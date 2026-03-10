@@ -692,7 +692,8 @@ Per inspeccionar una xarxa concreta i veure quins serveis hi estan connectats es
 ```bash
 docker network inspect shopmicro_backend-net
 ```
-![docker network inspect shopmicro_backend-net](img/fase3/docker-network-inspect.png)
+![docker network inspect shopmicro_backend-net](img/fase3/docker-network-inspect1.png)
+![docker network inspect shopmicro_backend-net](img/fase3/docker-network-inspect2.png)
 
 # Webgrafia
 
