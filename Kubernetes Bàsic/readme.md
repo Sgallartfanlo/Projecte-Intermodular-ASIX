@@ -758,6 +758,86 @@ Aquesta comanda mostra informació detallada del node actual dins del clúster S
 
 ---
 
+# Escaneig de vulnerabilitats de les imatges
+## Instal·lació de Trivy
+
+Primer s'ha instal·lat **Trivy** al node manager per poder analitzar les imatges utilitzades dins del clúster.
+
+```bash
+sudo apt install wget apt-transport-https gnupg lsb-release -y
+````
+
+```bash
+wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
+```
+
+```bash
+echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee /etc/apt/sources.list.d/trivy.list
+```
+
+```bash
+sudo apt update
+```
+
+```bash
+sudo apt install trivy -y
+```
+
+Un cop instal·lada l'eina, es pot comprovar que la instal·lació s'ha realitzat correctament amb la següent comanda:
+
+```bash
+trivy --version
+```
+---
+
+## Escaneig de la imatge MySQL
+
+Una de les imatges utilitzades al projecte és **mysql:8.0**. Aquesta imatge s'ha analitzat amb Trivy per detectar possibles vulnerabilitats.
+
+```bash
+trivy image mysql:8.0
+```
+
+Durant l'escaneig, Trivy analitza tots els paquets instal·lats dins la imatge i mostra les vulnerabilitats trobades classificades segons el seu nivell de severitat.
+
+Els nivells de severitat són:
+
+* **CRITICAL**
+* **HIGH**
+* **MEDIUM**
+* **LOW**
+
+![Escaneig de la imatge MySQL](img/fase3/trivy-mysql.png)
+![Escaneig de la imatge MySQL](img/fase3/trivy-mysql1.png)
+
+---
+
+## Escaneig d'una altra imatge del projecte
+
+També s'ha analitzat una altra imatge utilitzada dins del projecte, com per exemple **redis:7**.
+
+```bash
+trivy image redis:7
+```
+
+Aquest escaneig permet comprovar si la imatge conté vulnerabilitats en el sistema base o en les dependències utilitzades pel servei.
+
+![Escaneig de la imatge Redis](img/fase3/trivy-redis.png)
+
+---
+
+## Mesures de seguretat recomanades
+
+Per reduir el risc associat a vulnerabilitats en imatges Docker es poden aplicar diverses mesures de seguretat:
+
+* Utilitzar versions actualitzades de les imatges
+* Utilitzar imatges mínimes com **alpine** o **slim**
+* Actualitzar regularment les dependències del sistema
+* Escanejar les imatges abans de desplegar-les en producció
+* Evitar utilitzar imatges amb vulnerabilitats **CRITICAL** sense aplicar actualitzacions
+
+---
+
 # Webgrafia
 
 * Documentació oficial de Docker Compose:
