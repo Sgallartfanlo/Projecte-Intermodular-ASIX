@@ -854,3 +854,21 @@ Per reduir el risc associat a vulnerabilitats en imatges Docker es poden aplicar
 
 * Documentació oficial de Docker Engine:
   [https://docs.docker.com/engine/](https://docs.docker.com/engine/)
+
+  * Documentació oficial de Docker Swarm:
+  [https://docs.docker.com/engine/swarm/](https://docs.docker.com/engine/swarm/)
+
+* Documentació de Docker Stack:
+  [https://docs.docker.com/engine/swarm/stack-deploy/](https://docs.docker.com/engine/swarm/stack-deploy/)
+
+* Documentació de Docker Secrets:
+  [https://docs.docker.com/engine/swarm/secrets/](https://docs.docker.com/engine/swarm/secrets/)
+
+* Documentació de xarxes Overlay a Docker:
+  [https://docs.docker.com/network/overlay/](https://docs.docker.com/network/overlay/)
+
+* Documentació de seguretat a Docker Swarm:
+  [https://docs.docker.com/engine/swarm/security/](https://docs.docker.com/engine/swarm/security/)
+
+* Documentació oficial de Trivy:
+  [https://aquasecurity.github.io/trivy/](https://aquasecurity.github.io/trivy/)
