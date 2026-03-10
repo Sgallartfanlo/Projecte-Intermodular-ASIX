@@ -504,7 +504,7 @@ A més, el fitxer manté les credencials dins de la secció `environment`, la qu
 
 # 14. Docker Secrets
 
-En aquesta fase s’han migrat totes les credencials del fitxer `docker-stack.yml` a **Docker Secrets**.
+En aquesta fase s’han migrat totes les credencials del fitxer [Docker-stack](https://github.com/Sgallartfanlo/Projecte-Intermodular-ASIX/blob/main/Kubernetes%20B%C3%A0sic/fase%202/docker-stack.yml) a **Docker Secrets**.
 
 L’objectiu és millorar la seguretat del clúster Docker Swarm evitant que les contrasenyes apareguin en text pla dins del fitxer de configuració o en variables d’entorn. Docker Secrets permet emmagatzemar informació sensible de forma segura i només la posa a disposició dels serveis que la necessiten.
 
