@@ -459,6 +459,46 @@ Aquesta distribució permet repartir la càrrega del servei entre diferents màq
 
 ![Distribució de les rèpliques del product-service](img/fase2/swarm-scale-distribution.png)
 
+# Fase 3: Seguretat a Docker Swarm
+## Anàlisi de vulnerabilitats del docker-stack.yml
+[Docker-stack](https://github.com/Sgallartfanlo/Projecte-Intermodular-ASIX/blob/main/Kubernetes%20B%C3%A0sic/fase%202/docker-stack.yml)
+
+Després de revisar el fitxer `docker-stack.yml`, s’han identificat diverses credencials i configuracions sensibles definides en clar, fet que representa un risc de seguretat dins del clúster Docker Swarm.
+
+La primera vulnerabilitat detectada és l’ús de la contrasenya de root de MySQL directament al fitxer de configuració:
+
+```yaml
+MYSQL_ROOT_PASSWORD: rootpassword
+```
+
+Aquesta credencial apareix als serveis `db-products` i `db-orders`. El problema és que qualsevol usuari amb accés al fitxer podria veure la contrasenya, i a més també podria quedar exposada en inspeccions del servei o en l’historial del projecte.
+
+També s’ha detectat que diversos microserveis utilitzen la mateixa contrasenya en clar per connectar-se a les bases de dades:
+
+```yaml
+DB_PASS: rootpassword
+```
+
+Això afecta els serveis `product-service`, `order-service` i `user-service`. Aquesta pràctica és insegura perquè distribueix la mateixa credencial sensible per diversos contenidors, augmentant la superfície d’exposició en cas de compromís d’algun servei.
+
+Una altra vulnerabilitat és l’ús de l’usuari `root` com a usuari de connexió a la base de dades:
+
+```yaml
+DB_USER: root
+```
+
+Encara que funcionalment és vàlid, no és una bona pràctica de seguretat, ja que s’estan utilitzant privilegis massa elevats per a serveis d’aplicació. El recomanable seria utilitzar usuaris específics amb permisos limitats.
+
+A més, el fitxer manté les credencials dins de la secció `environment`, la qual cosa implica que poden quedar visibles fàcilment en un `docker service inspect`, en logs o en configuracions exportades. En entorns reals això és especialment crític, ja que les credencials no haurien d’estar mai escrites en clar dins dels fitxers de desplegament.
+
+## Credencials identificades
+
+* `MYSQL_ROOT_PASSWORD: rootpassword` a `db-products`
+* `MYSQL_ROOT_PASSWORD: rootpassword` a `db-orders`
+* `DB_PASS: rootpassword` a `product-service`
+* `DB_PASS: rootpassword` a `order-service`
+* `DB_PASS: rootpassword` a `user-service`
+* `DB_USER: root` a diversos serveis d’aplicació
 
 # Webgrafia
 
