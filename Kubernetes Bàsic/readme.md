@@ -604,6 +604,96 @@ MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db_root_password
 
 ---
 
+# 15. Aïllament de xarxes Overlay
+
+En aquesta fase es revisa la configuració de xarxes del clúster Docker Swarm per assegurar que cada component del sistema només pot comunicar-se amb els serveis estrictament necessaris. Aquesta separació permet millorar la seguretat del sistema i reduir la superfície d'atac.
+
+Per aconseguir aquest aïllament s'han definit tres xarxes overlay dins del fitxer `docker-stack.yml`:
+
+- `frontend-net`
+- `backend-net`
+- `data-net`
+
+Cada servei només està connectat a les xarxes que necessita per funcionar.
+
+---
+
+## Xarxa frontend
+
+La xarxa `frontend-net` s'utilitza per connectar la interfície web amb el punt d'entrada del sistema.
+
+Els serveis connectats a aquesta xarxa són:
+
+- `frontend`
+- `api-gateway`
+
+D'aquesta manera el servei `frontend` només pot comunicar-se amb l'`api-gateway`, que és el component responsable de gestionar les peticions i redirigir-les cap als microserveis interns.
+
+---
+
+## Xarxa backend
+
+La xarxa `backend-net` s'utilitza per a la comunicació entre l'`api-gateway` i els microserveis de l'API.
+
+Els serveis connectats a aquesta xarxa són:
+
+- `api-gateway`
+- `product-service`
+- `order-service`
+- `user-service`
+- `notification-service`
+
+Aquesta configuració permet que l'`api-gateway` gestioni totes les peticions cap als microserveis, evitant que el `frontend` accedeixi directament a aquests serveis.
+
+---
+
+## Xarxa de dades
+
+La xarxa `data-net` s'utilitza per a la comunicació amb els serveis de dades.
+
+Els serveis connectats a aquesta xarxa són:
+
+- `db-products`
+- `db-orders`
+- `cache`
+- `message-queue`
+- microserveis que necessiten accés a dades
+
+Aquesta separació assegura que les bases de dades només siguin accessibles pels microserveis que realment les utilitzen.
+
+---
+
+## Bases de dades no exposades
+
+Els serveis de base de dades (`db-products` i `db-orders`) no tenen cap port publicat amb la directiva `ports`.
+
+Això significa que:
+
+- No són accessibles des de l'exterior del clúster
+- Només poden ser utilitzades pels serveis connectats a la xarxa `data-net`
+
+Aquesta configuració evita accessos directes a les bases de dades des de fora del sistema.
+
+---
+
+## Verificació de les xarxes
+
+Per comprovar les xarxes creades dins del clúster es pot utilitzar la següent comanda:
+
+```bash
+docker network ls
+````
+![docker network ls](img/fase3/docker-network-ls.png)
+
+Aquesta comanda mostra totes les xarxes disponibles al sistema.
+
+Per inspeccionar una xarxa concreta i veure quins serveis hi estan connectats es pot utilitzar:
+
+```bash
+docker network inspect shopmicro_backend-net
+```
+![docker network inspect shopmicro_backend-net](img/fase3/docker-network-inspect.png)
+
 # Webgrafia
 
 * Documentació oficial de Docker Compose:
