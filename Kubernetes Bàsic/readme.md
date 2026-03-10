@@ -695,6 +695,68 @@ docker network inspect shopmicro_backend-net
 ![docker network inspect shopmicro_backend-net](img/fase3/docker-network-inspect1.png)
 ![docker network inspect shopmicro_backend-net](img/fase3/docker-network-inspect2.png)
 
+# 16. TLS i certificats al clúster
+
+Docker Swarm utilitza automàticament **TLS (Transport Layer Security)** per protegir la comunicació entre els nodes del clúster.  
+Quan s’inicialitza un clúster Swarm, Docker crea una **CA interna (Certificate Authority)** que s’encarrega de generar i gestionar els certificats de tots els nodes.
+
+Aquests certificats permeten:
+
+- Autenticar els nodes del clúster
+- Xifrar la comunicació entre managers i workers
+- Garantir que només nodes autoritzats poden unir-se al clúster
+
+Cada node del clúster rep automàticament un certificat signat per la CA interna de Docker Swarm.
+
+---
+
+## Verificació de la configuració TLS
+
+Per comprovar que el clúster utilitza TLS i veure informació del Swarm, es pot executar la següent comanda des del **manager**:
+
+```bash
+docker info | grep -A5 'Swarm'
+````
+
+Aquesta comanda mostra informació sobre l’estat del clúster, incloent si el node és manager, l’identificador del node i altres paràmetres relacionats amb el Swarm.
+
+![Verificació del TLS](img/fase3/docker-info.png)
+
+---
+
+## Certificats del node manager
+
+Docker Swarm genera automàticament certificats per a cada node del clúster.
+Aquests certificats es troben al directori:
+
+```
+/var/lib/docker/swarm/certificates/
+```
+
+En aquest directori es poden trobar diversos fitxers relacionats amb els certificats TLS del node, com per exemple:
+
+* `swarm-node.crt`
+* `swarm-node.key`
+* `swarm-root-ca.crt`
+
+Aquests fitxers s’utilitzen per autenticar el node dins del clúster i per establir connexions segures amb la resta de nodes.
+
+---
+
+## Inspecció del certificat
+
+Per veure informació sobre el certificat utilitzat pel node es pot utilitzar la següent comanda:
+
+```bash
+docker node inspect self
+```
+
+Aquesta comanda mostra informació detallada del node actual dins del clúster Swarm, incloent dades sobre el certificat TLS utilitzat per a la seva autenticació.
+
+![Inspecció del certificat](img/fase3/docker-node-inspect.png)
+
+---
+
 # Webgrafia
 
 * Documentació oficial de Docker Compose:
