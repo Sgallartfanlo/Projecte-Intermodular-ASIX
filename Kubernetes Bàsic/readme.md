@@ -502,7 +502,7 @@ A més, el fitxer manté les credencials dins de la secció `environment`, la qu
 
 ---
 
-# 14. Docker Secrets
+# Docker Secrets
 
 En aquesta fase s’han migrat totes les credencials del fitxer [Docker-stack](https://github.com/Sgallartfanlo/Projecte-Intermodular-ASIX/blob/main/Kubernetes%20B%C3%A0sic/fase%202/docker-stack.yml) a **Docker Secrets**.
 
@@ -604,7 +604,7 @@ MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db_root_password
 
 ---
 
-# 15. Aïllament de xarxes Overlay
+# Aïllament de xarxes Overlay
 
 En aquesta fase es revisa la configuració de xarxes del clúster Docker Swarm per assegurar que cada component del sistema només pot comunicar-se amb els serveis estrictament necessaris. Aquesta separació permet millorar la seguretat del sistema i reduir la superfície d'atac.
 
@@ -695,7 +695,7 @@ docker network inspect shopmicro_backend-net
 ![docker network inspect shopmicro_backend-net](img/fase3/docker-network-inspect1.png)
 ![docker network inspect shopmicro_backend-net](img/fase3/docker-network-inspect2.png)
 
-# 16. TLS i certificats al clúster
+# TLS i certificats al clúster
 
 Docker Swarm utilitza automàticament **TLS (Transport Layer Security)** per protegir la comunicació entre els nodes del clúster.  
 Quan s’inicialitza un clúster Swarm, Docker crea una **CA interna (Certificate Authority)** que s’encarrega de generar i gestionar els certificats de tots els nodes.
