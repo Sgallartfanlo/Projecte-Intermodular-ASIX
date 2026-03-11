@@ -838,6 +838,22 @@ Per reduir el risc associat a vulnerabilitats en imatges Docker es poden aplicar
 
 ---
 
+# Fase 4: Kubernetes — Migració i Gestió Avançada
+## Comparativa entre Docker Swarm i Kubernetes
+
+Per entendre les diferències entre Docker Swarm i Kubernetes s'ha realitzat una comparativa aplicada al projecte **ShopMicro**, que utilitza una arquitectura de microserveis.
+
+| Característica | Docker Swarm | Kubernetes |
+|---|---|---|
+| Escalat | Permet escalar serveis amb `docker service scale` o definint rèpliques al `docker-stack.yml`. | Permet escalar pods modificant les rèpliques dels Deployments o utilitzant autoscaling (HPA). |
+| Self-healing | Si un contenidor falla, Swarm el reinicia automàticament per mantenir el nombre de rèpliques. | Kubernetes recrea automàticament els pods que fallen per mantenir l'estat desitjat. |
+| Rolling updates | Permet actualitzar serveis progressivament amb `update_config`. | Els Deployments permeten rolling updates automàtics i rollback si hi ha errors. |
+| Gestió de secrets | Utilitza Docker Secrets per protegir credencials sensibles. | Kubernetes utilitza Secrets per gestionar dades sensibles com contrasenyes o tokens. |
+| Networking | Utilitza xarxes overlay per comunicar serveis entre nodes. | Kubernetes utilitza Services per permetre la comunicació entre pods dins del clúster. |
+| Complexitat | Més simple d'instal·lar i gestionar. | Més complex però molt més flexible i escalable. |
+
+En el projecte **ShopMicro**, Docker Swarm ha estat utilitzat per desplegar inicialment els microserveis. Posteriorment, Kubernetes permet una gestió més avançada del sistema, especialment en aspectes com l'escalabilitat, l'automatització i la gestió de recursos.
+
 # Webgrafia
 
 * Documentació oficial de Docker Compose:
