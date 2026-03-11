@@ -854,6 +854,82 @@ Per entendre les diferències entre Docker Swarm i Kubernetes s'ha realitzat una
 
 En el projecte **ShopMicro**, Docker Swarm ha estat utilitzat per desplegar inicialment els microserveis. Posteriorment, Kubernetes permet una gestió més avançada del sistema, especialment en aspectes com l'escalabilitat, l'automatització i la gestió de recursos.
 
+---
+
+## Preparació de l'entorn Kubernetes
+
+### Instal·lació de kubectl
+
+Primer s'ha instal·lat **kubectl**, que és l'eina de línia de comandes utilitzada per interactuar amb Kubernetes.
+
+```bash
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+````
+
+```bash
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+```
+
+Un cop instal·lat es pot comprovar que funciona correctament amb:
+
+```bash
+kubectl version --client
+```
+
+![kubectl version](img/fase4/versio-kubectl.png)
+
+---
+
+### Instal·lació de Minikube
+
+Després s'ha instal·lat **Minikube**, que permet crear el clúster Kubernetes local.
+
+```bash
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+```
+
+```bash
+sudo install minikube-linux-amd64 /usr/local/bin/minikube
+```
+
+Per comprovar que la instal·lació s'ha realitzat correctament:
+
+```bash
+minikube version
+```
+
+![minikube version](img/fase4/minikube-version.png)
+
+---
+
+### Creació del clúster Kubernetes
+
+Un cop instal·lat Minikube, s'ha iniciat el clúster amb la següent comanda:
+
+```bash
+minikube start
+```
+
+Aquesta comanda crea un clúster Kubernetes local i configura automàticament **kubectl** per poder interactuar amb ell.
+
+![minikube start](img/fase4/minikube-start.png)
+
+---
+
+### Verificació del clúster
+
+Per comprovar que el clúster està funcionant correctament s'ha utilitzat la comanda:
+
+```bash
+kubectl get nodes
+```
+
+Si tot funciona correctament, apareixerà un node amb l'estat **Ready**, que correspon al node creat per Minikube.
+
+![kubectl get nodes](img/fase4/kubectl-get-nodes.png)
+
+---
+
 # Webgrafia
 
 * Documentació oficial de Docker Compose:
