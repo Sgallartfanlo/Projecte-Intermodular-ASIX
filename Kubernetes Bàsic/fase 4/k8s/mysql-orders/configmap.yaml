@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-orders-config
+  namespace: shopmicro
+data:
+  MYSQL_DATABASE: orders
