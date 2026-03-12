@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: product-config
+  namespace: shopmicro
+data:
+  DB_HOST: mysql-products
+  REDIS_HOST: redis
