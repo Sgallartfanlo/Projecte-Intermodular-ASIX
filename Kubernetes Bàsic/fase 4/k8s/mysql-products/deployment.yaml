@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-products
+  namespace: shopmicro
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-products
+  template:
+    metadata:
+      labels:
+        app: mysql-products
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:8
+        ports:
+        - containerPort: 3306
+        envFrom:
+        - configMapRef:
+            name: mysql-products-config
+        - secretRef:
+            name: mysql-products-secret
