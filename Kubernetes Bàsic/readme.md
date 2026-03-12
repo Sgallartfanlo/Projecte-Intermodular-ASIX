@@ -930,6 +930,111 @@ Si tot funciona correctament, apareixerà un node amb l'estat **Ready**, que cor
 
 ---
 
+# Creació de fitxers YAML per a Kubernetes
+
+Per desplegar els microserveis del projecte **ShopMicro** a Kubernetes s'han creat diversos fitxers **YAML** que defineixen els recursos del clúster.
+
+El codi complet utilitzat per aquesta fase es pot consultar al repositori:
+
+**Codi Kubernetes del projecte**
+[Kubernetes](https://github.com/Sgallartfanlo/Projecte-Intermodular-ASIX/tree/main/Kubernetes%20B%C3%A0sic/fase%204/k8s)
+
+---
+
+## Recursos Kubernetes utilitzats
+
+Per a **cada microservei** s'han creat els següents recursos:
+
+* **Deployment** → gestiona els pods i el nombre de rèpliques
+* **Service** → permet la comunicació entre serveis
+* **ConfigMap** → configuració no sensible
+* **Secret** → credencials i dades sensibles
+
+Els microserveis desplegats són:
+
+* frontend
+* api-gateway
+* product-service
+* mysql-products
+* mysql-orders
+* redis
+* rabbitmq
+
+---
+
+## Estructura dels fitxers
+
+Els fitxers YAML es troben dins del directori **k8s** amb l'estructura següent:
+
+```
+k8s/
+│
+├─ namespace.yaml
+│
+├─ frontend/
+│   ├─ deployment.yaml
+│   ├─ service.yaml
+│   ├─ configmap.yaml
+│   └─ secret.yaml
+│
+├─ api-gateway/
+│   ├─ deployment.yaml
+│   ├─ service.yaml
+│   ├─ configmap.yaml
+│   └─ secret.yaml
+│
+├─ product-service/
+│   ├─ deployment.yaml
+│   ├─ service.yaml
+│   ├─ configmap.yaml
+│   └─ secret.yaml
+│
+├─ mysql-products/
+├─ mysql-orders/
+├─ redis/
+└─ rabbitmq/
+```
+
+---
+
+# Namespace del projecte
+
+Per aïllar tots els recursos del projecte s'ha creat un **namespace anomenat `shopmicro`**.
+
+Fitxer utilitzat:
+
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: shopmicro
+```
+
+El namespace es crea amb:
+
+```bash
+kubectl apply -f k8s/namespace.yaml
+```
+
+
+És comprova amb:
+
+```bash
+kubectl get namespaces
+```
+
+![namespaces](img/fase4/kubectl-get-namespaces.png)
+
+---
+
+# Migració i desplegament dels serveis
+
+Un cop creats tots els fitxers YAML, s'han desplegat els recursos al clúster Kubernetes amb la comanda següent:
+
+```bash
+kubectl apply -R -f k8s/
+```
+
 # Webgrafia
 
 * Documentació oficial de Docker Compose:
