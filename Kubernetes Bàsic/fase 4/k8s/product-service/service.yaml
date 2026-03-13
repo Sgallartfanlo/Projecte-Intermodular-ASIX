@@ -8,5 +8,5 @@ spec:
     app: product-service
   ports:
   - port: 5000
-    targetPort: 5000
+    targetPort: 80
   type: ClusterIP
