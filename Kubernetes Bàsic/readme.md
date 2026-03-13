@@ -1099,6 +1099,72 @@ Aquesta informació permet verificar que el microservei **product-service** est�
 
 ---
 
+# Rolling Update del product-service
+
+Kubernetes permet actualitzar les aplicacions sense aturar el servei mitjançant el mecanisme de **rolling update**.
+
+Un rolling update substitueix progressivament els pods antics per pods nous amb la nova versió de la imatge, assegurant que el servei continua disponible durant el procés.
+
+---
+
+## Actualització de la imatge del microservei
+
+Per realitzar el rolling update s'ha modificat la imatge utilitzada pel deployment **product-service**.
+
+Aquesta actualització es pot fer amb la comanda següent:
+
+```bash
+kubectl set image deployment/product-service product=nginx:1.25 -n shopmicro
+```
+
+Aquesta comanda actualitza la imatge del contenidor del deployment **product-service** a una nova versió.
+
+---
+
+## Monitorització del Rolling Update
+
+Durant l'actualització Kubernetes crea nous pods amb la nova imatge mentre elimina progressivament els pods antics.
+
+Per observar el procés s'ha utilitzat la comanda següent:
+
+```bash
+kubectl rollout status deployment/product-service -n shopmicro
+```
+
+Aquesta comanda mostra l'estat de l'actualització fins que el desplegament es completa correctament.
+
+![rollout status](img/fase4/kubectl-rollout-status.png)
+
+---
+
+## Comprovació dels pods actualitzats
+
+Un cop finalitzat el rolling update, es poden veure els nous pods executant-se amb la nova imatge amb la comanda següent:
+
+```bash
+kubectl get pods -n shopmicro
+```
+
+Aquesta comanda mostra els pods actualitzats que executen la nova versió del microservei.
+
+![pods updated](img/fase4/kubectl-get-pods-update2.png)
+
+---
+
+## Descripció del deployment actualitzat
+
+Finalment es pot comprovar la configuració actual del deployment amb:
+
+```bash
+kubectl describe deployment product-service -n shopmicro
+```
+
+Aquesta comanda permet verificar que el deployment està utilitzant la nova imatge.
+
+![describe updated deployment](img/fase4/kubectl-describe-update2.png)
+
+---
+
 # Webgrafia
 
 * Documentació oficial de Docker Compose:
