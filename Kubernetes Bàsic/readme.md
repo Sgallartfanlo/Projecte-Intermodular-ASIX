@@ -1035,6 +1035,70 @@ Un cop creats tots els fitxers YAML, s'han desplegat els recursos al clúster Ku
 kubectl apply -R -f k8s/
 ```
 
+---
+
+# Comprovació dels pods
+
+Un cop desplegats tots els recursos de Kubernetes, s'ha comprovat que els **pods s'han creat correctament** amb la comanda següent:
+
+```bash
+kubectl get pods -n shopmicro
+```
+
+Aquesta comanda mostra tots els pods executant-se dins del namespace **shopmicro**.
+
+Si el desplegament s'ha realitzat correctament, tots els pods haurien d'aparèixer amb l'estat **Running**.
+
+![kubectl get pods](img/fase4/kubectl-get-pods.png)
+
+---
+
+# Comprovació dels serveis
+
+També s'han comprovat els serveis creats al clúster Kubernetes amb la comanda següent:
+
+```bash
+kubectl get services -n shopmicro
+```
+
+Aquesta comanda mostra els serveis que permeten la comunicació entre els diferents microserveis del projecte.
+
+En el cas del projecte **ShopMicro**, s'han creat serveis per als següents components:
+
+* frontend
+* api-gateway
+* product-service
+* mysql-products
+* mysql-orders
+* redis
+* rabbitmq
+
+![kubectl get services](img/fase4/kubectl-get-services.png)
+
+---
+
+# Informació detallada d'un Deployment
+
+Per obtenir informació detallada sobre el desplegament d'un microservei s'ha utilitzat la comanda següent:
+
+```bash
+kubectl describe deployment product-service -n shopmicro
+```
+
+Aquesta comanda mostra informació detallada sobre el deployment, com per exemple:
+
+* nombre de rèpliques
+* imatge utilitzada
+* configuració dels contenidors
+* ports exposats
+* events del clúster
+
+Aquesta informació permet verificar que el microservei **product-service** està configurat correctament dins del clúster Kubernetes.
+
+![kubectl describe deployment](img/fase4/kubectl-describe-deployment.png)
+
+---
+
 # Webgrafia
 
 * Documentació oficial de Docker Compose:
