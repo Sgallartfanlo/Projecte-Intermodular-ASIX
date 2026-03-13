@@ -1,7 +1,29 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: frontend-config
+  name: frontend-html
   namespace: shopmicro
+
 data:
-  API_URL: http://api-gateway
+  index.html: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <title>ShopMicro</title>
+    </head>
+    <body>
+
+    <h1>ShopMicro</h1>
+
+    <h2>Products</h2>
+    <button>Carregar productes</button>
+
+    <h2>Comprar producte</h2>
+    <form>
+    Product ID: <input type="text"><br>
+    Quantitat: <input type="text"><br>
+    <button>Comprar</button>
+    </form>
+
+    </body>
+    </html>
