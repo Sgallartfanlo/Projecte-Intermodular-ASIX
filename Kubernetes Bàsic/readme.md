@@ -1165,6 +1165,68 @@ Aquesta comanda permet verificar que el deployment està utilitzant la nova imat
 
 ---
 
+# Comprovació dels fluxos funcionals
+
+Un cop desplegats tots els microserveis dins Kubernetes s'han realitzat diferents proves per verificar que els serveis es comuniquen correctament dins del clúster.
+
+Aquestes proves es realitzen directament des del terminal utilitzant **kubectl** i eines com **curl**.
+
+---
+
+# Prova de comunicació entre serveis
+
+Per comprovar que els serveis es poden comunicar dins del clúster s'ha creat un pod temporal amb la imatge `curl`.
+
+```bash
+kubectl run test --rm -it --image=curlimages/curl -- sh
+```
+
+Aquesta comanda crea un contenidor temporal que permet fer peticions HTTP als serveis del clúster.
+
+---
+
+# Prova d'accés a l'API Gateway
+
+Un cop dins del contenidor de prova s'ha comprovat l'accés al servei **api-gateway**.
+
+```bash
+curl http://api-gateway
+```
+
+Aquesta petició confirma que el servei **api-gateway** és accessible dins del clúster Kubernetes.
+
+![curl gateway](img/fase4/curl-gateway.png)
+
+---
+
+# Prova d'accés al product-service
+
+També s'ha comprovat l'accés al microservei **product-service**.
+
+```bash
+curl http://product-service:5000
+```
+
+Aquesta petició confirma que el microservei **product-service** es pot comunicar correctament amb altres serveis dins del clúster.
+
+![curl product service](img/fase4/curl-product-service.png)
+
+---
+
+# Verificació dels logs dels microserveis
+
+Per verificar que els microserveis processen correctament les peticions s'han consultat els logs dels pods.
+
+```bash
+kubectl logs -n shopmicro -l app=product-service
+```
+
+Aquests logs permeten comprovar que els serveis reben i processen les peticions correctament.
+
+![logs microserveis](img/fase4/logs-microserveis.png)
+
+---
+
 # Webgrafia
 
 * Documentació oficial de Docker Compose:
