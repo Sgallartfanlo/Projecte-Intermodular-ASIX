@@ -1,29 +1,32 @@
-apiVersion: v1
-kind: ConfigMap
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: frontend-html
+  name: frontend
   namespace: shopmicro
 
-data:
-  index.html: |
-    <!DOCTYPE html>
-    <html>
-    <head>
-    <title>ShopMicro</title>
-    </head>
-    <body>
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: frontend
 
-    <h1>ShopMicro</h1>
+  template:
+    metadata:
+      labels:
+        app: frontend
 
-    <h2>Products</h2>
-    <button>Carregar productes</button>
+    spec:
+      containers:
+      - name: frontend
+        image: nginx:latest
+        ports:
+        - containerPort: 80
 
-    <h2>Comprar producte</h2>
-    <form>
-    Product ID: <input type="text"><br>
-    Quantitat: <input type="text"><br>
-    <button>Comprar</button>
-    </form>
+        volumeMounts:
+        - name: web-content
+          mountPath: /usr/share/nginx/html
 
-    </body>
-    </html>
+      volumes:
+      - name: web-content
+        configMap:
+          name: frontend-html
