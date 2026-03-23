@@ -1262,7 +1262,7 @@ Aquests logs permeten comprovar que els serveis reben i processen les peticions 
 * Documentació oficial de Trivy:
   [https://aquasecurity.github.io/trivy/](https://aquasecurity.github.io/trivy/)
 
-  * Base de dades de vulnerabilitats CVE:
+* Base de dades de vulnerabilitats CVE:
   [https://cve.mitre.org/](https://cve.mitre.org/)
 
 * Documentació oficial de Kubernetes:
