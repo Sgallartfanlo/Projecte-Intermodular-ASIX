@@ -1261,3 +1261,27 @@ Aquests logs permeten comprovar que els serveis reben i processen les peticions 
 
 * Documentació oficial de Trivy:
   [https://aquasecurity.github.io/trivy/](https://aquasecurity.github.io/trivy/)
+
+  * Base de dades de vulnerabilitats CVE:
+  [https://cve.mitre.org/](https://cve.mitre.org/)
+
+* Documentació oficial de Kubernetes:
+  [https://kubernetes.io/docs/home/](https://kubernetes.io/docs/home/)
+
+* Referència de l'API de Kubernetes:
+  [https://kubernetes.io/docs/reference/kubernetes-api/](https://kubernetes.io/docs/reference/kubernetes-api/)
+
+* Model de desplegament de Pods:
+  [https://kubernetes.io/docs/concepts/workloads/pods/](https://kubernetes.io/docs/concepts/workloads/pods/)
+
+* Documentació de Kubernetes Services:
+  [https://kubernetes.io/docs/concepts/services-networking/service/](https://kubernetes.io/docs/concepts/services-networking/service/)
+
+* Referència de Kubernetes ConfigMaps:
+  [https://kubernetes.io/docs/concepts/configuration/configmap/](https://kubernetes.io/docs/concepts/configuration/configmap/)
+
+* Documentació de Kubernetes Secrets:
+  [https://kubernetes.io/docs/concepts/configuration/secret/](https://kubernetes.io/docs/concepts/configuration/secret/)
+
+* Documentació de Volums Persistents (PV):
+  [https://kubernetes.io/docs/concepts/storage/persistent-volumes/](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)
