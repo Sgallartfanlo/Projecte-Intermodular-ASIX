@@ -1,0 +1,94 @@
+# Monitoratge amb Zabbix: Guia d'Instal·lació i Configuració de l'Agent 2
+
+Aquest README detalla el procés complet d'instal·lació, verificació i configuració avançada (mode actiu) de l'agent de Zabbix en un entorn Windows.
+
+---
+
+## 1. Identificació del Sistema (Client)
+Abans de començar, identifiquem les dades de la màquina Windows (Hostname i IP) per assegurar la connectivitat.
+
+![Identificació de Hostname i IP](imatges/Hostname_ip_client.png)
+
+---
+
+## 2. Descàrrega de l'Agent
+Baixem l'instal·lador oficial des del lloc web de Zabbix seleccionant els paràmetres de la nostra màquina.
+
+1.  **Secció Zabbix Agents:** ![Secció Zabbix Agents](imatges/Part_agent.png)
+2.  **Paràmetres del sistema:** ![Selecció de paràmetres](imatges/Opcions_agent.png)
+3.  **Versió Agent 2:** ![Descàrrega Agent 2](imatges/ZA2.png)
+
+---
+
+## 3. Procés d'Instal·lació
+Executem l'assistent MSI a la màquina client.
+
+![Instal·lador a l'escriptori](imatges/Agent_dins_maquina.png)
+
+### Passos de l'assistent:
+* **Benvinguda:** ![Pas 1](imatges/1rpas.png)
+* **Llicència:** ![Pas 2](imatges/2npas.png)
+* **Components:** ![Pas 3](imatges/3rpas.png)
+* **Configuració de xarxa:** Aquí definim el Hostname (`DC01`) i la IP del servidor Zabbix.
+    ![Configuració d'IP i Hostname](imatges/Ip_host_za.jpg)
+
+Finalitzem la instal·lació:
+![Confirmació Final](imatges/Instal·lar.png)
+![Instal·lació Finalitzada](imatges/Finish.png)
+
+---
+
+## 4. Verificació i Configuració del Mode Actiu
+L'agent es pot configurar perquè enviï les dades de manera proactiva (Active Checks).
+
+1.  **Estat del Servei:** Comprovem que el servei estigui actiu a Windows.
+    ![Estat del Servei](imatges/Comprovació.png)
+    ![Propietats del Servei](imatges/Comprovaciò.png)
+
+2.  **Edició del fitxer .conf:** Configurem els paràmetres per al mode actiu.
+    ![Ruta de fitxers](imatges/Ruta_config.png)
+    ![Directori de configuració](imatges/Ruta2.png)
+    ![Configuració Server Active](imatges/Server.png)
+    ![Configuració Hostname Actiu](imatges/Actiu1.png)
+    ![Verificació IP al conf](imatges/Ip_conf.png)
+    ![Verificació Hostname al conf](imatges/Hostname_conf.png)
+
+3.  **Manteniment de Logs:** Netegem l'historial per detectar nous errors d'arrencada.
+    ![Esborrar Logs](imatges/Borrar_logs.png)
+    ![Veure Logs de l'Agent](imatges/LOGS.png)
+
+4.  **Reinici del Servei:** Apliquem els canvis reiniciant l'agent.
+    ![Aturar/Reiniciar Servei](imatges/Reinici_servei.png)
+    ![Iniciar Servei](imatges/Inici_servei.png)
+
+---
+
+## 5. Configuració al Frontend de Zabbix
+Registrem i vinculem el host amb les plantilles adequades a la interfície web.
+
+1.  **Accés i Creació:**
+    ![Accés Web](imatges/Accedir_int_web.png)
+    ![Botó Nou Equip](imatges/BTN_n_equipo.png)
+
+2.  **Configuració del Host:** ![Configuració Nou Host](imatges/Config_new_host.png)
+
+3.  **Gestió de Plantilles (Mode Actiu):** Desvinculem la plantilla estàndard i n'afegim una d'activa.
+    ![Desvincular Plantilla](imatges/Desvincular.png)
+    ![Afegir Nova Plantilla Activa](imatges/Plantilla.png)
+
+4.  **Guardar canvis:** ![Guardar Host](imatges/Guardar.png)
+
+---
+
+## 6. Verificació de Dades i Monitoratge
+Un cop el host està configurat, comprovem que el servidor està rebent informació correctament.
+
+1.  **Llista d'Ítems:** ![Llista d'Ítems](imatges/Items.png)
+2.  **Disponibilitat:** ![Estat Disponibilitat](imatges/Disponi.png)
+3.  **Dades en Temps Real:** ![Latest Data](imatges/Monitoring.png)
+4.  **Estat Final:**
+    ![Monitoratge correcte](imatges/ComprovaciòZ.png)
+    ![Estat Final Verd](imatges/Final.png)
+
+---
+**Nota:** Recorda que en mode **Actiu**, el monitoratge es confirma mitjançant l'actualització de les dades a la secció "Latest data", encara que la icona ZBX no estigui sempre en verd intens.
