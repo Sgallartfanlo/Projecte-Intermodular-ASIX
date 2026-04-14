@@ -1010,6 +1010,37 @@ Per demostrar el flux tres, eliminare el pod de product-service per veure que pa
 I si tornem a llistar els pods, podem veure que torna a estar-hi:
 ![Auto-recuperació del Pod (Self-healing)](img/fase4/self-healing.png)
 
+---
+
+# Conclusions: comparativa final i reflexió sobre l'entorn de producció
+
+Després d'haver completat les quatre fases del projecte **ShopMicro**, s'ha pogut analitzar l'evolució d'una arquitectura de microserveis des d'un entorn de desenvolupament local fins a un clúster orquestrat d'alta disponibilitat. A continuació, es presenta una comparativa final entre les tres solucions utilitzades.
+
+## Comparativa de les tres solucions
+
+### 1. Docker Compose (Desenvolupament)
+Aquesta solució s'ha mostrat ideal per a la fase inicial del projecte. Permet definir tota l'arquitectura en un sol fitxer i aixecar-la amb una sola comanda, facilitant les proves ràpides de codi. No obstant això, és una solució limitada a un sol node, la qual cosa la fa invàlida per a producció, ja que no ofereix alta disponibilitat ni escalabilitat real.
+
+### 2. Docker Swarm (Orquestració bàsica)
+Swarm ha permès fer el salt a un clúster de múltiples nodes d'una manera molt senzilla gràcies a la seva integració nativa amb Docker. Ha aportat funcionalitats crítiques de producció com:
+* **Alta disponibilitat**: Capacitat de mantenir el servei actiu davant la caiguda d'un node worker.
+* **Escalat en calent**: Possibilitat d'augmentar el nombre de rèpliques segons la demanda.
+* **Seguretat nativa**: Implementació de Docker Secrets i xarxes overlay per a l'aïllament de dades.
+
+### 3. Kubernetes (Gestió avançada)
+Representa el cim de l'orquestració. Tot i tenir una corba d'aprenentatge més elevada i una configuració més complexa (fitxers YAML detallats per a cada recurs), ofereix un control granular molt superior. Destaca pel seu sistema de **Self-healing** més avançat i una gestió de la xarxa i el cicle de vida dels objectes molt més flexible que Swarm.
+
+---
+
+## Reflexió: Quin entorn seria millor per a ShopMicro en producció?
+
+Per a la plataforma **ShopMicro**, considerem que l'entorn més adequat per a un entorn de producció real és **Kubernetes**. Aquesta elecció es fonamenta en els següents motius:
+
+* **Gestió de la Salut (Readiness/Liveness Probes)**: A diferència de Swarm, Kubernetes ens ha permès definir de forma molt precisa quan un microservei està realment preparat per rebre trànsit. Això és vital en ShopMicro per evitar que un usuari accedeixi a l'API abans que les connexions amb MySQL o Redis estiguin establertes.
+* **Flexibilitat en les Actualitzacions**: El sistema de **Rolling Updates** de Kubernetes, combinat amb la facilitat de fer **Rollbacks** a través de l'historial de revisions, ofereix una seguretat operativa molt superior per fer canvis en el catàleg de productes o en el servei de comandes sense risc de tall de servei.
+* **Estandardització i Ecosistema**: Kubernetes és l'estàndard de la indústria. Per a una plataforma e-commerce que podria créixer en el futur, Kubernetes permet integrar fàcilment eines de monitoratge, escalat automàtic (HPA) i gestió de trànsit avançada (Ingress) que Docker Swarm no pot oferir amb la mateixa potència.
+
+**En conclusió**, tot i que Docker Swarm és una solució excel·lent per a projectes petits o mitjans per la seva simplicitat, la naturalesa crítica d'un e-commerce com **ShopMicro** —que requereix zero temps d'inactivitat i una gestió de dades molt robusta— fa que **Kubernetes** sigui la inversió tecnològica més encertada per garantir la continuïtat del negoci i l'escalabilitat futura.
 
 # Webgrafia
 
