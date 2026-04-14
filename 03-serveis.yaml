@@ -1,0 +1,223 @@
+# ============================================================
+# PRODUCT SERVICE
+# ============================================================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-service
+  namespace: shopmicro
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: product-service
+  template:
+    metadata:
+      labels:
+        app: product-service
+    spec:
+      containers:
+      - name: product-api
+        image: python:3.9-slim
+        command: ["/bin/bash", "/app/start.sh"]
+        ports:
+        - containerPort: 5000
+        env:
+        - name: MYSQL_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: shopmicro-config
+              key: MYSQL_HOST_PRODUCTS
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: shopmicro-secrets
+              key: mysql-root-password
+        - name: REDIS_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: shopmicro-config
+              key: REDIS_HOST
+        volumeMounts:
+        - name: api-code
+          mountPath: /app
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+      volumes:
+      - name: api-code
+        configMap:
+          name: product-api-code
+          defaultMode: 0755
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: product-service
+  namespace: shopmicro
+spec:
+  selector:
+    app: product-service
+  ports:
+  - port: 5000
+---
+# ============================================================
+# ORDER SERVICE
+# ============================================================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-service
+  namespace: shopmicro
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-service
+  template:
+    metadata:
+      labels:
+        app: order-service
+    spec:
+      containers:
+      - name: order-api
+        image: python:3.9-slim
+        command: ["/bin/bash", "/app/start.sh"]
+        ports:
+        - containerPort: 5000
+        env:
+        - name: MYSQL_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: shopmicro-config
+              key: MYSQL_HOST_ORDERS
+        - name: MYSQL_HOST_PRODUCTS
+          valueFrom:
+            configMapKeyRef:
+              name: shopmicro-config
+              key: MYSQL_HOST_PRODUCTS
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: shopmicro-secrets
+              key: mysql-root-password
+        - name: RABBITMQ_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: shopmicro-config
+              key: RABBITMQ_HOST
+        volumeMounts:
+        - name: api-code
+          mountPath: /app
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+      volumes:
+      - name: api-code
+        configMap:
+          name: order-api-code
+          defaultMode: 0755
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-service
+  namespace: shopmicro
+spec:
+  selector:
+    app: order-service
+  ports:
+  - port: 5000
+---
+# ============================================================
+# USER SERVICE
+# ============================================================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service
+  namespace: shopmicro
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-service
+  template:
+    metadata:
+      labels:
+        app: user-service
+    spec:
+      containers:
+      - name: user-api
+        image: python:3.9-slim
+        command: ["/bin/bash", "/app/start.sh"]
+        ports:
+        - containerPort: 5000
+        volumeMounts:
+        - name: api-code
+          mountPath: /app
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 20
+          periodSeconds: 10
+      volumes:
+      - name: api-code
+        configMap:
+          name: user-api-code
+          defaultMode: 0755
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-service
+  namespace: shopmicro
+spec:
+  selector:
+    app: user-service
+  ports:
+  - port: 5000
+---
+# ============================================================
+# NOTIFICATION SERVICE
+# ============================================================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification-service
+  namespace: shopmicro
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notification-service
+  template:
+    metadata:
+      labels:
+        app: notification-service
+    spec:
+      containers:
+      - name: notification-worker
+        image: python:3.9-slim
+        command: ["/bin/bash", "/app/start.sh"]
+        env:
+        - name: RABBITMQ_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: shopmicro-config
+              key: RABBITMQ_HOST
+        volumeMounts:
+        - name: worker-code
+          mountPath: /app
+      volumes:
+      - name: worker-code
+        configMap:
+          name: notification-code
+          defaultMode: 0755
