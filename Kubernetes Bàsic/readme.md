@@ -856,6 +856,159 @@ En el projecte **ShopMicro**, Docker Swarm ha estat utilitzat per desplegar inic
 
 ---
 
+# Preparació de l'entorn Kubernetes
+## Instal·lació de kubectl
+Primer s'ha instal·lat **kubectl**, que és l'eina de línia de comandes utilitzada per interactuar amb Kubernetes.
+
+Un cop instal·lat es pot comprovar que funciona correctament amb:
+```bash
+kubectl version --client
+```
+![Comprovació instal·lació kubectl](img/fase4/kubectl-version.png)
+
+## Configuració del clúster amb Docker Desktop
+En lloc d'usar Minikube, s'ha optat per utilitzar el clúster de **Kubernetes v1.30.x** integrat a **Docker Desktop**.
+Els passos realitzats han estat:
+1. Activar l'opció **"Enable Kubernetes"** des del menú de configuració de Docker Desktop.
+2. Configurar el terminal de WSL per apuntar al context correcte mitjançant la comanda:
+```bash
+kubectl config use-context docker-desktop
+```
+
+## Verificació del clúster
+Per assegurar que el clúster està operatiu i que kubectl té comunicació amb el control plane, s'ha executat:
+```bash
+kubectl cluster-info
+```
+Aquesta comanda confirma que el clúster de Kubernetes està funcionant correctament a la xarxa interna de Docker.
+![Verificació cluster-info](img/fase4/kubectl-cluster-info.png)
+
+## Creació de fitxers YAML per a Kubernetes:
+En aquesta secció es detalla la configuració de cadascun dels microserveis de la plataforma. Tots els arxius es troben allotjats al següent repositori:
+👉 [GitHub - ShopMicro Kubernetes Fase 4](https://github.com/Sgallartfanlo/Projecte-Intermodular-ASIX/tree/main/Kubernetes%20B%C3%A0sic/fase%204)
+
+### Configuració Global i Seguretat (01-config.yaml)
+Aquest fitxer és la base de la infraestructura, ja que defineix com els serveis es troben entre si i com es gestionen les dades sensibles.
+* **ConfigMap (shopmicro-config):** Defineix variables d'entorn no sensibles com MYSQL_HOST_PRODUCTS, MYSQL_HOST_ORDERS, REDIS_HOST i RABBITMQ_HOST. Això permet que, si l'arquitectura canvia, només calgui modificar aquest fitxer central.
+* **Secret (shopmicro-secrets):** Gestió de credencials xifrades en base64. S'utilitza per emmagatzemar la contrasenya d'arrel de MySQL (mysql-root-password), garantint que cap contrasenya aparegui en text pla als desplegaments.
+
+### Infraestructura de Dades (02-infraestructura.yaml)
+Defineix els motors de base de dades, cua i memòria cau.
+* **Deployments (Bases de dades, Redis i RabbitMQ):**
+    * S'utilitzen imatges oficials com mysql:8.0, redis:7.2-alpine i rabbitmq:3.12-management-alpine.
+    * **Liveness Probes:** Cada base de dades inclou una prova de vida mitjançant mysqladmin ping per reiniciar el contenidor automàticament si el motor de BD es bloqueja.
+* **Services:** Tots els serveis d'infraestructura s'exposen internament mitjançant ClusterIP, assegurant que les bases de dades no siguin accessibles des de fora del clúster per motius de seguretat.
+
+### Orquestració de Microserveis (03-serveis.yaml i 05-apis.yaml)
+És el nucli de l'aplicació on resideix la lògica de negoci.
+* **Readiness Probes:** Cada microservei (product, order, user) té configurada una sonda httpGet al port 5000 a la ruta /health. Kubernetes no enviarà trànsit a aquests pods fins que l'aplicació Flask estigui totalment inicialitzada.
+* **Volums i Injecció de Codi:** En lloc de crear imatges personalitzades cada vegada, el codi Python s'injecta mitjançant ConfigMaps (product-api-code, order-api-code, etc.) que es munten com a volums de lectura a /app.
+* **Escalabilitat:** El product-service s'ha configurat amb 2 rèpliques per defecte per complir amb els requisits d'alta disponibilitat.
+
+### Frontend i Gateway (04-frontend.yaml i gateway-config.yaml)
+Gestiona la interfície d'usuari i el trànsit d'entrada.
+* **Frontend:** Utilitza un contenidor nginx:alpine on s'injecta el fitxer index.html des d'un ConfigMap. Aquest fitxer conté tota la lògica de la interfície reactiva per a la botiga.
+* **API Gateway:** És el cervell del trànsit d'entrada. La seva configuració (nginx.conf) inclou:
+    * **Proxy Pass:** Redirigeix peticions segons la ruta (ex: /api/products va cap al product-service).
+    * **Resolver:** Utilitza el DNS intern de Kubernetes (10.96.0.10) per resoldre els noms dels serveis en temps real.
+* **NodePort Service:** El servei api-gateway-service és l'únic punt d'exposició extern, configurat al port 30080, permetent que l'usuari final accedeixi a la plataforma ShopMicro des de localhost:30080.
+
+## Creació del namespace
+Per tal d'aïllar tots els recursos del projecte ShopMicro i mantenir l'entorn organitzat segons les bones pràctiques d'orquestració avançada, s'ha creat un Namespace específic:
+```bash
+kubectl create namespace shopmicro
+```
+
+Finalment, s'ha verificat la presència del node de Docker Desktop amb l'estat Ready:
+```bash
+kubectl get nodes
+```
+![Comprovació estat del Node Ready](img/fase4/kubectl-get-nodes.png)
+
+Si el node apareix com a Ready, el clúster està preparat per rebre els desplegaments de la plataforma.
+
+## Migració i desplegament
+### Aplicació dels manifests
+Per realitzar un desplegament ordenat i assegurar que tots els recursos es creen dins de l'entorn d'aïllament, s'ha utilitzat la següent comanda des de l'arrel del directori on es troben els fitxers:
+```bash
+kubectl apply -f . -n shopmicro
+```
+Aquesta comanda processa de forma seqüencial des dels Secrets i ConfigMaps fins dels Deployments i Serveis, establint tota la pila tecnològica de la botiga.
+
+### Verificació de l'estat dels Pods
+S'ha comprovat que l'orquestrador ha estat capaç d'aixecar totes les instàncies correctament. L'estat Running i el valor 1/1 a la columna Ready indiquen que les Readiness Probes han passat amb èxit.
+```bash
+kubectl get pods -n shopmicro
+```
+![Llistat de Pods en estat Running](img/fase4/kubectl-get-pods.png)
+
+### Verificació dels Serveis (Networking)
+S'ha validat la xarxa interna i externa del projecte. Es confirma que cada component té la seva IP interna (ClusterIP) i que el Gateway té el port mapejat cap a l'exterior.
+```bash
+kubectl get services -n shopmicro
+```
+![Llistat de Serveis ClusterIP i NodePort](img/fase4/kubectl-get-services.png)
+
+* **api-gateway-external:** Tipus NodePort, exposant el port 80 del contenidor al port 30080 del node.
+* **db-products / db-orders:** Tipus ClusterIP, accessibles només internament per les APIs al port 3306.
+* **cache / message-queue:** Serveis interns per a Redis i RabbitMQ.
+
+### Inspecció detallada del Deployment: product-service
+Per assegurar que les polítiques d'alta disponibilitat i les sondes de salut estan ben aplicades, s'ha inspeccionat el recurs principal de la plataforma.
+```bash
+kubectl describe deployment product-service -n shopmicro
+```
+![Detalls del Deployment product-service](img/fase4/kubectl-describe-deployment.png)
+
+En el resultat d'aquesta comanda s'han verificat els següents punts crítics:
+* **Replicas:** 2 desired | 2 updated | 2 total | 2 available (Garanteix que el servei no cau si falla un pod).
+* **Liveness/Readiness:** Es confirma que Kubernetes consulta /health cada 10-30 segons.
+* **Environment:** Es veu com es carreguen les variables des del ConfigMap shopmicro-config.
+* **Events:** Es documenta que el procés de Scaling i Deployment s'ha realitzat sense errors (Successfully pulled image, Created container).
+
+## Rolling update
+El Rolling Update és l'estratègia per defecte de Kubernetes per actualitzar la versió d'un Deployment. En lloc d'aturar tots els contenidors alhora, Kubernetes els substitueix de forma gradual, garantint que sempre hi hagi rèpliques disponibles per atendre les peticions dels usuaris.
+
+### Procés d'execució de l'actualització
+Per documentar aquest procés, s'ha actualitzat la imatge del microservei product-service a una versió superior (per exemple, de la versió de prova python:3.9-slim a python:3.10-slim) mitjançant la següent comanda:
+```bash
+kubectl set image deployment/product-service product-api=python:3.10-slim -n shopmicro
+```
+
+### Monitorització del desplegament progressiu
+Un cop llançada la comanda, s'ha utilitzat kubectl rollout status i kubectl get pods per observar el comportament de l'orquestrador en temps real:
+* **Creació gradual:** Kubernetes crea un nou Pod amb la imatge actualitzada.
+* **Validació amb Readiness Probes:** El nou Pod no rep trànsit fins que la seva Readiness Probe (definida al fitxer 03-serveis.yaml apuntant a /health) confirma que l'aplicació està llista.
+* **Substitució:** Un cop el nou Pod està actiu, Kubernetes procedeix a aturar i eliminar un dels Pods de la versió antiga.
+* **Finalització:** El procés es repeteix fins que totes les rèpliques (les 2 definides en l'arquitectura) estan executant la nova imatge.
+
+### Evidències documentals
+Per a la memòria, s'han capturat les següents dades que demostren l'èxit de l'operació: 
+* **Estat del Rollout:** La sortida de `kubectl rollout status deployment/product-service -n shopmicro` indicant "successfully rolled out". 
+![Estat del rollout status](img/fase4/rollout-status.png)
+
+* **Historial de revisions:** Mitjançant `kubectl rollout history`, es pot comprovar que el desplegament té ara una nova revisió, permetent un Rollback ràpid en cas d'error. 
+![Historial de revisions rollout history](img/fase4/rollout-history.png)
+
+* **Captura de Pods:** Una seqüència de `kubectl get pods -n shopmicro` on es visualitzen simultàniament els Pods.
+![Pods durant el rolling update](img/fase4/rollout-pods.png)
+
+## Comprovació dels fluxos funcionals
+Per comprobar el flux de la consulta de productes hem de entrar a la web i fixar-nos en la part de la següent captura:
+![Web ShopMicro inicial: dades des de MySQL](img/fase4/web-mysql.png)
+
+* Veiem que ara està mirant de la base de dades mysql. Pero si comprem algo o mirem les comandes al tornar a aquesta secció veurem que les dades les treu del caché de redis.
+![Web ShopMicro: dades des de la Cache de Redis](img/fase4/web-redis.png)
+
+Per a comprovar el següent flux haurem de fer una comanda:
+* Un cop tinguem la comanda seleccionada, si li donem a comprar enviara una notificació al rabbitMQ i descomptara el stock que quedi.
+![Logs del Notification Service rebent comanda de RabbitMQ](img/fase4/logs-compra.png)
+
+Per demostrar el flux tres, eliminare el pod de product-service per veure que pasa:
+![Eliminació manual d'un Pod](img/fase4/delete-pod.png)
+
+I si tornem a llistar els pods, podem veure que torna a estar-hi:
+![Auto-recuperació del Pod (Self-healing)](img/fase4/self-healing.png)
 
 
 # Webgrafia
