@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: shopmicro-config
+  namespace: shopmicro
+data:
+  MYSQL_HOST_PRODUCTS: "db-products"
+  MYSQL_HOST_ORDERS: "db-orders"
+  REDIS_HOST: "cache"
+  RABBITMQ_HOST: "message-queue"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: shopmicro-secrets
+  namespace: shopmicro
+type: Opaque
+data:
+  # 'root' en base64
+  mysql-root-password: cm9vdA==
+  # 'shopuser' en base64
+  mysql-password: c2hvcHVzZXI=
