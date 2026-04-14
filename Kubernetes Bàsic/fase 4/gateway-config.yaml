@@ -12,14 +12,21 @@ data:
       server {
         listen 80;
 
-        # Autenticació
+        # Autenticació i registre
         location /api/auth/ {
           proxy_pass http://user-service:5000;
           proxy_set_header Host $host;
           proxy_set_header X-Real-IP $remote_addr;
         }
 
-        # Productes
+        # Llistat d'usuaris (admin)
+        location /api/users {
+          proxy_pass http://user-service:5000;
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+        }
+
+        # Productes (públic per GET, autenticat per POST/PUT/DELETE)
         location /api/products {
           proxy_pass http://product-service:5000;
           proxy_set_header Host $host;

@@ -1,6 +1,6 @@
 ---
 # ============================================================
-# PRODUCT SERVICE - Flask API real
+# PRODUCT SERVICE
 # ============================================================
 apiVersion: v1
 kind: ConfigMap
@@ -10,10 +10,7 @@ metadata:
 data:
   app.py: |
     from flask import Flask, jsonify, request
-    import mysql.connector
-    import redis
-    import json
-    import os
+    import mysql.connector, redis, json, os
 
     app = Flask(__name__)
 
@@ -30,42 +27,33 @@ data:
 
     def init_db():
         try:
-            db = get_db()
-            cursor = db.cursor()
-            cursor.execute("""
-                CREATE TABLE IF NOT EXISTS products (
-                    id INT AUTO_INCREMENT PRIMARY KEY,
-                    name VARCHAR(255) NOT NULL,
-                    description TEXT,
-                    price DECIMAL(10,2) NOT NULL,
-                    stock INT DEFAULT 0,
-                    image_url VARCHAR(500)
-                )
-            """)
-            cursor.execute("SELECT COUNT(*) FROM products")
-            count = cursor.fetchone()[0]
-            if count == 0:
+            db = get_db(); c = db.cursor()
+            c.execute("""CREATE TABLE IF NOT EXISTS products (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                name VARCHAR(255) NOT NULL,
+                description TEXT,
+                price DECIMAL(10,2) NOT NULL,
+                stock INT DEFAULT 0,
+                image_url VARCHAR(500)
+            )""")
+            c.execute("SELECT COUNT(*) FROM products")
+            if c.fetchone()[0] == 0:
                 sample = [
-                    ('MacBook Pro M3', 'Portàtil Apple amb chip M3', 2499.99, 15, 'https://via.placeholder.com/200x150?text=MacBook'),
-                    ('iPhone 15 Pro', 'Smartphone Apple 256GB', 1199.99, 30, 'https://via.placeholder.com/200x150?text=iPhone'),
-                    ('AirPods Pro', 'Auriculars amb cancel·lació de soroll', 279.99, 50, 'https://via.placeholder.com/200x150?text=AirPods'),
-                    ('iPad Air', 'Tablet Apple 10.9 pulgades', 749.99, 20, 'https://via.placeholder.com/200x150?text=iPad'),
-                    ('Apple Watch S9', 'Rellotge intel·ligent GPS', 449.99, 25, 'https://via.placeholder.com/200x150?text=Watch'),
-                    ('Samsung 4K TV', 'Televisió 55 pulgades QLED', 899.99, 10, 'https://via.placeholder.com/200x150?text=TV'),
+                    ('MacBook Pro M3', 'Portatil Apple amb chip M3 Pro, 18GB RAM, 512GB SSD', 2499.99, 15, ''),
+                    ('iPhone 15 Pro', 'Smartphone Apple 256GB, titani natural, càmera 48MP', 1199.99, 30, ''),
+                    ('AirPods Pro 2a gen', 'Auriculars amb cancel·lació activa de soroll i àudio espacial', 279.99, 50, ''),
+                    ('iPad Air M2', 'Tablet Apple 11 pulgades, Wi-Fi, 256GB', 749.99, 20, ''),
+                    ('Apple Watch Series 9', 'Rellotge intel·ligent GPS 45mm, alumini negre', 449.99, 25, ''),
+                    ('Samsung Neo QLED 55"', 'Televisió 4K 55 pulgades, HDR2000, 144Hz', 899.99, 10, ''),
+                    ('Sony WH-1000XM5', 'Auriculars over-ear premium, 30h bateria', 349.99, 35, ''),
+                    ('Logitech MX Master 3S', 'Ratolí ergonomic sense fils, 8K DPI', 99.99, 60, ''),
                 ]
-                cursor.executemany(
+                c.executemany(
                     "INSERT INTO products (name, description, price, stock, image_url) VALUES (%s,%s,%s,%s,%s)",
-                    sample
-                )
-            db.commit()
-            cursor.close()
-            db.close()
+                    sample)
+            db.commit(); c.close(); db.close()
         except Exception as e:
             print(f"DB init error: {e}")
-
-    @app.before_request
-    def before():
-        pass
 
     @app.route('/health')
     def health():
@@ -78,38 +66,27 @@ data:
             cached = r.get('products:all')
             if cached:
                 return jsonify({'data': json.loads(cached), 'source': 'cache'})
-        except:
-            pass
+        except: pass
         try:
-            db = get_db()
-            cursor = db.cursor(dictionary=True)
-            cursor.execute("SELECT * FROM products")
-            products = cursor.fetchall()
-            for p in products:
-                p['price'] = float(p['price'])
-            cursor.close()
-            db.close()
-            try:
-                r.setex('products:all', 60, json.dumps(products))
-            except:
-                pass
+            db = get_db(); c = db.cursor(dictionary=True)
+            c.execute("SELECT * FROM products"); products = c.fetchall()
+            for p in products: p['price'] = float(p['price'])
+            c.close(); db.close()
+            try: get_redis().setex('products:all', 60, json.dumps(products))
+            except: pass
             return jsonify({'data': products, 'source': 'db'})
         except Exception as e:
             return jsonify({'error': str(e)}), 500
 
-    @app.route('/api/products/<int:product_id>', methods=['GET'])
-    def get_product(product_id):
+    @app.route('/api/products/<int:pid>', methods=['GET'])
+    def get_product(pid):
         try:
-            db = get_db()
-            cursor = db.cursor(dictionary=True)
-            cursor.execute("SELECT * FROM products WHERE id=%s", (product_id,))
-            product = cursor.fetchone()
-            cursor.close()
-            db.close()
-            if not product:
-                return jsonify({'error': 'Not found'}), 404
-            product['price'] = float(product['price'])
-            return jsonify(product)
+            db = get_db(); c = db.cursor(dictionary=True)
+            c.execute("SELECT * FROM products WHERE id=%s", (pid,))
+            p = c.fetchone(); c.close(); db.close()
+            if not p: return jsonify({'error': 'Not found'}), 404
+            p['price'] = float(p['price'])
+            return jsonify(p)
         except Exception as e:
             return jsonify({'error': str(e)}), 500
 
@@ -117,56 +94,40 @@ data:
     def create_product():
         data = request.get_json()
         try:
-            db = get_db()
-            cursor = db.cursor()
-            cursor.execute(
+            db = get_db(); c = db.cursor()
+            c.execute(
                 "INSERT INTO products (name, description, price, stock, image_url) VALUES (%s,%s,%s,%s,%s)",
-                (data['name'], data.get('description',''), data['price'], data.get('stock',0), data.get('image_url',''))
-            )
-            db.commit()
-            new_id = cursor.lastrowid
-            cursor.close()
-            db.close()
-            try:
-                get_redis().delete('products:all')
-            except:
-                pass
+                (data['name'], data.get('description',''), data['price'], data.get('stock',0), data.get('image_url','')))
+            db.commit(); new_id = c.lastrowid; c.close(); db.close()
+            try: get_redis().delete('products:all')
+            except: pass
             return jsonify({'id': new_id, 'message': 'Producte creat'}), 201
         except Exception as e:
             return jsonify({'error': str(e)}), 500
 
-    @app.route('/api/products/<int:product_id>/stock', methods=['PATCH'])
-    def update_stock(product_id):
+    @app.route('/api/products/<int:pid>', methods=['PUT'])
+    def update_product(pid):
         data = request.get_json()
-        delta = data.get('delta', 0)
         try:
-            db = get_db()
-            cursor = db.cursor()
-            cursor.execute("UPDATE products SET stock = stock + %s WHERE id=%s", (delta, product_id))
-            db.commit()
-            cursor.close()
-            db.close()
-            try:
-                get_redis().delete('products:all')
-            except:
-                pass
-            return jsonify({'message': 'Stock actualitzat'})
+            db = get_db(); c = db.cursor()
+            c.execute(
+                "UPDATE products SET name=%s, description=%s, price=%s, stock=%s WHERE id=%s",
+                (data['name'], data.get('description',''), data['price'], data.get('stock',0), pid))
+            db.commit(); c.close(); db.close()
+            try: get_redis().delete('products:all')
+            except: pass
+            return jsonify({'message': 'Producte actualitzat'})
         except Exception as e:
             return jsonify({'error': str(e)}), 500
 
-    @app.route('/api/products/<int:product_id>', methods=['DELETE'])
-    def delete_product(product_id):
+    @app.route('/api/products/<int:pid>', methods=['DELETE'])
+    def delete_product(pid):
         try:
-            db = get_db()
-            cursor = db.cursor()
-            cursor.execute("DELETE FROM products WHERE id=%s", (product_id,))
-            db.commit()
-            cursor.close()
-            db.close()
-            try:
-                get_redis().delete('products:all')
-            except:
-                pass
+            db = get_db(); c = db.cursor()
+            c.execute("DELETE FROM products WHERE id=%s", (pid,))
+            db.commit(); c.close(); db.close()
+            try: get_redis().delete('products:all')
+            except: pass
             return jsonify({'message': 'Producte eliminat'})
         except Exception as e:
             return jsonify({'error': str(e)}), 500
@@ -181,7 +142,7 @@ data:
     python /app/app.py
 ---
 # ============================================================
-# ORDER SERVICE - Flask API real
+# ORDER SERVICE
 # ============================================================
 apiVersion: v1
 kind: ConfigMap
@@ -191,11 +152,7 @@ metadata:
 data:
   app.py: |
     from flask import Flask, jsonify, request
-    import mysql.connector
-    import pika
-    import json
-    import os
-    import datetime
+    import mysql.connector, pika, json, os, datetime
 
     app = Flask(__name__)
 
@@ -217,40 +174,29 @@ data:
 
     def init_db():
         try:
-            db = get_db()
-            cursor = db.cursor()
-            cursor.execute("""
-                CREATE TABLE IF NOT EXISTS orders (
-                    id INT AUTO_INCREMENT PRIMARY KEY,
-                    user_name VARCHAR(255) NOT NULL,
-                    product_id INT NOT NULL,
-                    product_name VARCHAR(255),
-                    quantity INT DEFAULT 1,
-                    total_price DECIMAL(10,2),
-                    status VARCHAR(50) DEFAULT 'pending',
-                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-                )
-            """)
-            db.commit()
-            cursor.close()
-            db.close()
+            db = get_db(); c = db.cursor()
+            c.execute("""CREATE TABLE IF NOT EXISTS orders (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                user_name VARCHAR(255) NOT NULL,
+                product_id INT NOT NULL,
+                product_name VARCHAR(255),
+                quantity INT DEFAULT 1,
+                total_price DECIMAL(10,2),
+                status VARCHAR(50) DEFAULT 'confirmed',
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )""")
+            db.commit(); c.close(); db.close()
         except Exception as e:
             print(f"DB init error: {e}")
 
-    def publish_to_rabbitmq(message):
+    def publish_rabbitmq(message):
         try:
             conn = pika.BlockingConnection(pika.ConnectionParameters(
-                host=os.environ.get('RABBITMQ_HOST', 'message-queue'),
-                heartbeat=10
-            ))
-            channel = conn.channel()
-            channel.queue_declare(queue='orders', durable=True)
-            channel.basic_publish(
-                exchange='',
-                routing_key='orders',
-                body=json.dumps(message),
-                properties=pika.BasicProperties(delivery_mode=2)
-            )
+                host=os.environ.get('RABBITMQ_HOST', 'message-queue'), heartbeat=10))
+            ch = conn.channel()
+            ch.queue_declare(queue='orders', durable=True)
+            ch.basic_publish(exchange='', routing_key='orders', body=json.dumps(message),
+                properties=pika.BasicProperties(delivery_mode=2))
             conn.close()
         except Exception as e:
             print(f"RabbitMQ error: {e}")
@@ -261,16 +207,18 @@ data:
 
     @app.route('/api/orders', methods=['GET'])
     def get_orders():
+        user_filter = request.args.get('user')
         try:
-            db = get_db()
-            cursor = db.cursor(dictionary=True)
-            cursor.execute("SELECT * FROM orders ORDER BY created_at DESC")
-            orders = cursor.fetchall()
+            db = get_db(); c = db.cursor(dictionary=True)
+            if user_filter:
+                c.execute("SELECT * FROM orders WHERE user_name=%s ORDER BY created_at DESC", (user_filter,))
+            else:
+                c.execute("SELECT * FROM orders ORDER BY created_at DESC")
+            orders = c.fetchall()
             for o in orders:
                 o['total_price'] = float(o['total_price']) if o['total_price'] else 0
                 o['created_at'] = str(o['created_at'])
-            cursor.close()
-            db.close()
+            c.close(); db.close()
             return jsonify({'data': orders})
         except Exception as e:
             return jsonify({'error': str(e)}), 500
@@ -279,54 +227,77 @@ data:
     def create_order():
         data = request.get_json()
         try:
-            # Obtenir info del producte
-            pdb = get_products_db()
-            pcursor = pdb.cursor(dictionary=True)
-            pcursor.execute("SELECT * FROM products WHERE id=%s", (data['product_id'],))
-            product = pcursor.fetchone()
-            pcursor.close()
-            pdb.close()
-
+            pdb = get_products_db(); pc = pdb.cursor(dictionary=True)
+            pc.execute("SELECT * FROM products WHERE id=%s", (data['product_id'],))
+            product = pc.fetchone(); pc.close(); pdb.close()
             if not product:
                 return jsonify({'error': 'Producte no trobat'}), 404
-
-            qty = data.get('quantity', 1)
+            qty = int(data.get('quantity', 1))
             if product['stock'] < qty:
-                return jsonify({'error': 'Stock insuficient'}), 400
-
+                return jsonify({'error': f"Stock insuficient (disponible: {product['stock']})"}), 400
             total = float(product['price']) * qty
-
-            # Descomptar stock
-            pdb2 = get_products_db()
-            pcursor2 = pdb2.cursor()
-            pcursor2.execute("UPDATE products SET stock = stock - %s WHERE id=%s", (qty, data['product_id']))
-            pdb2.commit()
-            pcursor2.close()
-            pdb2.close()
-
+            # Descomptar stock amb verificació atòmica
+            pdb2 = get_products_db(); pc2 = pdb2.cursor()
+            pc2.execute(
+                "UPDATE products SET stock = stock - %s WHERE id=%s AND stock >= %s",
+                (qty, data['product_id'], qty))
+            affected = pc2.rowcount
+            pdb2.commit(); pc2.close(); pdb2.close()
+            if affected == 0:
+                return jsonify({'error': 'Stock insuficient'}), 400
             # Crear comanda
-            db = get_db()
-            cursor = db.cursor()
-            cursor.execute(
+            db = get_db(); c = db.cursor()
+            c.execute(
                 "INSERT INTO orders (user_name, product_id, product_name, quantity, total_price, status) VALUES (%s,%s,%s,%s,%s,'confirmed')",
-                (data.get('user_name', 'anonymous'), data['product_id'], product['name'], qty, total)
-            )
-            db.commit()
-            order_id = cursor.lastrowid
-            cursor.close()
-            db.close()
+                (data.get('user_name','anonymous'), data['product_id'], product['name'], qty, total))
+            db.commit(); order_id = c.lastrowid; c.close(); db.close()
+            publish_rabbitmq({'event':'order_created','order_id':order_id,
+                'user':data.get('user_name'),'product':product['name'],'quantity':qty,'total':total})
+            return jsonify({'order_id': order_id, 'message': 'Comanda creada', 'total': total}), 201
+        except Exception as e:
+            return jsonify({'error': str(e)}), 500
 
-            # Publicar a RabbitMQ
-            publish_to_rabbitmq({
-                'event': 'order_created',
-                'order_id': order_id,
-                'user': data.get('user_name', 'anonymous'),
-                'product': product['name'],
-                'quantity': qty,
-                'total': total
-            })
+    @app.route('/api/orders/<int:oid>/cancel', methods=['POST'])
+    def cancel_order(oid):
+        data = request.get_json() or {}
+        user_name = data.get('user_name','')
+        role = data.get('role','user')
+        try:
+            db = get_db(); c = db.cursor(dictionary=True)
+            c.execute("SELECT * FROM orders WHERE id=%s", (oid,))
+            order = c.fetchone()
+            if not order:
+                c.close(); db.close()
+                return jsonify({'error': 'Comanda no trobada'}), 404
+            if role != 'admin' and order['user_name'] != user_name:
+                c.close(); db.close()
+                return jsonify({'error': 'No autoritzat'}), 403
+            if order['status'] == 'cancelled':
+                c.close(); db.close()
+                return jsonify({'error': 'Ja cancel·lada'}), 400
+            # Restaurar stock
+            pdb = get_products_db(); pc = pdb.cursor()
+            pc.execute("UPDATE products SET stock = stock + %s WHERE id=%s",
+                (order['quantity'], order['product_id']))
+            pdb.commit(); pc.close(); pdb.close()
+            # Actualitzar ordre
+            c2 = db.cursor()
+            c2.execute("UPDATE orders SET status='cancelled' WHERE id=%s", (oid,))
+            db.commit(); c.close(); c2.close(); db.close()
+            publish_rabbitmq({'event':'order_cancelled','order_id':oid,
+                'user':user_name,'product':order['product_name']})
+            return jsonify({'message': f"Comanda #{oid} cancel·lada. Stock restaurat."})
+        except Exception as e:
+            return jsonify({'error': str(e)}), 500
 
-            return jsonify({'order_id': order_id, 'message': 'Comanda creada correctament', 'total': total}), 201
+    @app.route('/api/orders/<int:oid>', methods=['PUT'])
+    def update_order(oid):
+        data = request.get_json()
+        try:
+            db = get_db(); c = db.cursor()
+            c.execute("UPDATE orders SET status=%s WHERE id=%s", (data.get('status','confirmed'), oid))
+            db.commit(); c.close(); db.close()
+            return jsonify({'message': 'Comanda actualitzada'})
         except Exception as e:
             return jsonify({'error': str(e)}), 500
 
@@ -340,7 +311,7 @@ data:
     python /app/app.py
 ---
 # ============================================================
-# USER SERVICE - Flask API amb login i JWT
+# USER SERVICE - registre persistent a MySQL
 # ============================================================
 apiVersion: v1
 kind: ConfigMap
@@ -350,21 +321,45 @@ metadata:
 data:
   app.py: |
     from flask import Flask, jsonify, request
-    import hashlib
-    import json
-    import base64
-    import os
+    import mysql.connector, hashlib, json, base64, os
 
     app = Flask(__name__)
 
-    # Usuaris hardcoded (en producció seria BD)
-    USERS = {
-        'admin': {'password': hashlib.sha256('admin123'.encode()).hexdigest(), 'role': 'admin', 'name': 'Administrador'},
-        'user': {'password': hashlib.sha256('user123'.encode()).hexdigest(), 'role': 'user', 'name': 'Usuari Demo'},
-    }
+    def get_db():
+        return mysql.connector.connect(
+            host=os.environ.get('MYSQL_HOST_USERS', 'db-orders'),
+            user='root',
+            password=os.environ.get('MYSQL_ROOT_PASSWORD', 'root'),
+            database='shop_orders'
+        )
 
-    def make_token(username, role):
-        payload = json.dumps({'username': username, 'role': role})
+    def init_db():
+        try:
+            db = get_db(); c = db.cursor()
+            c.execute("""CREATE TABLE IF NOT EXISTS users (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                username VARCHAR(100) UNIQUE NOT NULL,
+                name VARCHAR(255) NOT NULL,
+                password_hash VARCHAR(64) NOT NULL,
+                role VARCHAR(20) DEFAULT 'user',
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )""")
+            defaults = [
+                ('admin', 'Administrador', 'admin123', 'admin'),
+                ('oleguer', 'Oleguer', 'user123', 'user'),
+                ('sergi', 'Sergi', 'user123', 'user'),
+                ('alex', 'Alex', 'user123', 'user'),
+            ]
+            for u in defaults:
+                h = hashlib.sha256(u[2].encode()).hexdigest()
+                c.execute("INSERT IGNORE INTO users (username,name,password_hash,role) VALUES (%s,%s,%s,%s)",
+                    (u[0],u[1],h,u[3]))
+            db.commit(); c.close(); db.close()
+        except Exception as e:
+            print(f"DB init error: {e}")
+
+    def make_token(username, role, name):
+        payload = json.dumps({'username': username, 'role': role, 'name': name})
         return base64.b64encode(payload.encode()).decode()
 
     @app.route('/health')
@@ -374,42 +369,74 @@ data:
     @app.route('/api/auth/login', methods=['POST'])
     def login():
         data = request.get_json()
-        username = data.get('username', '')
-        password = data.get('password', '')
+        username = data.get('username','').strip().lower()
+        hashed = hashlib.sha256(data.get('password','').encode()).hexdigest()
+        try:
+            db = get_db(); c = db.cursor(dictionary=True)
+            c.execute("SELECT * FROM users WHERE username=%s AND password_hash=%s", (username, hashed))
+            user = c.fetchone(); c.close(); db.close()
+            if not user:
+                return jsonify({'error': 'Credencials incorrectes'}), 401
+            return jsonify({'token': make_token(user['username'],user['role'],user['name']),
+                'username': user['username'], 'role': user['role'], 'name': user['name']})
+        except Exception as e:
+            return jsonify({'error': str(e)}), 500
+
+    @app.route('/api/auth/register', methods=['POST'])
+    def register():
+        data = request.get_json()
+        username = data.get('username','').strip().lower()
+        name = data.get('name','').strip()
+        password = data.get('password','')
+        if not username or not password or not name:
+            return jsonify({'error': 'Tots els camps son obligatoris'}), 400
+        if len(password) < 4:
+            return jsonify({'error': 'Contrasenya minima de 4 caracters'}), 400
         hashed = hashlib.sha256(password.encode()).hexdigest()
-
-        user = USERS.get(username)
-        if not user or user['password'] != hashed:
-            return jsonify({'error': 'Credencials incorrectes'}), 401
-
-        token = make_token(username, user['role'])
-        return jsonify({
-            'token': token,
-            'username': username,
-            'role': user['role'],
-            'name': user['name']
-        })
+        try:
+            db = get_db(); c = db.cursor()
+            c.execute("INSERT INTO users (username,name,password_hash,role) VALUES (%s,%s,%s,'user')",
+                (username, name, hashed))
+            db.commit(); c.close(); db.close()
+            return jsonify({'token': make_token(username,'user',name),
+                'username': username, 'role': 'user', 'name': name}), 201
+        except mysql.connector.IntegrityError:
+            return jsonify({'error': "L'usuari ja existeix"}), 409
+        except Exception as e:
+            return jsonify({'error': str(e)}), 500
 
     @app.route('/api/auth/verify', methods=['POST'])
     def verify():
         data = request.get_json()
-        token = data.get('token', '')
         try:
-            payload = json.loads(base64.b64decode(token).decode())
+            payload = json.loads(base64.b64decode(data.get('token','')).decode())
             return jsonify({'valid': True, 'user': payload})
         except:
             return jsonify({'valid': False}), 401
 
+    @app.route('/api/users', methods=['GET'])
+    def list_users():
+        try:
+            db = get_db(); c = db.cursor(dictionary=True)
+            c.execute("SELECT id, username, name, role, created_at FROM users ORDER BY created_at DESC")
+            users = c.fetchall()
+            for u in users: u['created_at'] = str(u['created_at'])
+            c.close(); db.close()
+            return jsonify({'data': users})
+        except Exception as e:
+            return jsonify({'error': str(e)}), 500
+
     if __name__ == '__main__':
+        init_db()
         app.run(host='0.0.0.0', port=5000)
 
   start.sh: |
     #!/bin/bash
-    pip install flask --quiet
+    pip install flask mysql-connector-python --quiet
     python /app/app.py
 ---
 # ============================================================
-# NOTIFICATION SERVICE - Worker RabbitMQ
+# NOTIFICATION SERVICE
 # ============================================================
 apiVersion: v1
 kind: ConfigMap
@@ -418,35 +445,37 @@ metadata:
   namespace: shopmicro
 data:
   app.py: |
-    import pika
-    import json
-    import os
-    import time
-    import datetime
+    import pika, json, os, time, datetime
 
     RABBITMQ_HOST = os.environ.get('RABBITMQ_HOST', 'message-queue')
 
     def callback(ch, method, properties, body):
         msg = json.loads(body)
         ts = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        print(f"[{ts}] NOTIFICACIÓ: Nova comanda #{msg.get('order_id')} - "
-              f"Client: {msg.get('user')} - "
-              f"Producte: {msg.get('product')} x{msg.get('quantity')} - "
-              f"Total: {msg.get('total')}€")
+        event = msg.get('event','unknown')
+        if event == 'order_created':
+            print(f"[{ts}] NOVA COMANDA #{msg.get('order_id')} | "
+                  f"Client: {msg.get('user')} | Producte: {msg.get('product')} "
+                  f"x{msg.get('quantity')} | Total: {msg.get('total')}EUR")
+        elif event == 'order_cancelled':
+            print(f"[{ts}] COMANDA #{msg.get('order_id')} CANCEL·LADA | "
+                  f"Client: {msg.get('user')} | Producte: {msg.get('product')}")
+        else:
+            print(f"[{ts}] EVENT: {json.dumps(msg)}")
         ch.basic_ack(delivery_tag=method.delivery_tag)
 
     def main():
         while True:
             try:
                 conn = pika.BlockingConnection(pika.ConnectionParameters(host=RABBITMQ_HOST))
-                channel = conn.channel()
-                channel.queue_declare(queue='orders', durable=True)
-                channel.basic_qos(prefetch_count=1)
-                channel.basic_consume(queue='orders', on_message_callback=callback)
-                print(f"[*] Notification service escoltant RabbitMQ a {RABBITMQ_HOST}...")
-                channel.start_consuming()
+                ch = conn.channel()
+                ch.queue_declare(queue='orders', durable=True)
+                ch.basic_qos(prefetch_count=1)
+                ch.basic_consume(queue='orders', on_message_callback=callback)
+                print(f"[*] Notification service escoltant a {RABBITMQ_HOST}...")
+                ch.start_consuming()
             except Exception as e:
-                print(f"Error connectant a RabbitMQ: {e}. Reintentant en 5s...")
+                print(f"Error: {e}. Reintentant en 5s...")
                 time.sleep(5)
 
     if __name__ == '__main__':
