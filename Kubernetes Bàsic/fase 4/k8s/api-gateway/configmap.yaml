@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: gateway-config
-  namespace: shopmicro
-data:
-  PRODUCT_SERVICE: product-service
-  ORDER_SERVICE: order-service
