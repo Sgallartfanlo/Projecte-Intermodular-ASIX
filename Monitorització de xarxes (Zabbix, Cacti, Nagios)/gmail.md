@@ -64,7 +64,7 @@ La contrasenya generada té aquest format: `xxxx xxxx xxxx xxxx` (16 caràcters)
 - Tots els paràmetres han de ser correctes
 - Es pot veure el "Servidor SMTP" confirmant la configuració
 
-### Pas 4: Provant el Tipo de Mitjà
+### Pas 4: Provant el Tipus de Mitjà
 
 ![Zabbix - Provar Notificacions Gmail](img/gmail/GM4.png)
 
