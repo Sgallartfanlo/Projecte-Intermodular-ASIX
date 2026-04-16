@@ -226,11 +226,13 @@ Camí: **Administració** → **Usuaris** → [Selecciona usuari] → **Mitjà**
 ### Pas 3: Email amb Detalls del Problema
 
 ![Gmail - Detalls del Problema](img/gmail/GM22.png)
+
 **Imatge 19:** Encapçalat del correu a la safata d'entrada de Gmail.
 
 ### Pas 4: Contingut del Correu d'Alerta
 
 ![Gmail - Contingut Complet de l'Alerta](img/gmail/GM23.png)
+
 **Imatge 20:** Correu d'alerta rebut amb informació detallada del problema:
 
 ```
