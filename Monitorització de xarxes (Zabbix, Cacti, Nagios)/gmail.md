@@ -247,36 +247,6 @@ ID original del problema: 808
 
 ---
 
-## Llista de Verificació de Configuració
-
-- Creant contrasenya d'aplicació al Compte de Google
-- Configurant tipus de mitjà "Notificacions Gmail" a Zabbix
-  - Servidor SMTP: smtp.gmail.com
-  - Port: 587
-  - Seguretat: STARTTLS
-  - Autenticació: Usuari i contrasenya
-- Afegint plantilles de missatge
-- Creant acció de disparador
-- Assignant usuari al grup de notificacions
-- Configurant mitjà d'usuari (Correu HTML)
-- Provant tipus de mitjà
-- Verificant recepció de correus de prova
-- Monitoritzant que els problemes generem alertes per correu
-
----
-
-## Configuració de Paràmetres SMTP
-
-### Gmail SMTP:
-```
-Servidor: smtp.gmail.com
-Port: 587
-Connexió: STARTTLS
-Usuari: el_teu_email@gmail.com
-Contrasenya: xxxx xxxx xxxx xxxx (generada des del Compte de Google)
-```
----
-
 ## Recursos Útils
 
 - [Documentació oficial de Zabbix](https://www.zabbix.com/documentation/)
