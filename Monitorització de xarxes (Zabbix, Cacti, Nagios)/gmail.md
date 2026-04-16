@@ -135,7 +135,7 @@ Algunes plantilles comunes inclouen:
 - **Enviar a tipus de mitjà:** Correu (HTML)
 - **Missatge personalitzat:** [Desmarcat]
 
-### Pas 5: Operaciones de Recuperación
+### Pas 5: Operacions de Recuperació
 
 ![Zabbix - Accions Avançades](img/gmail/GM15.png)
 
