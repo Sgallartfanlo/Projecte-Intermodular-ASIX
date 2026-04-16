@@ -1,31 +1,4 @@
-# 📬 Configuració de Notificacions de Zabbix via Telegram
-
-Aquesta guia explica pas a pas com integrar Zabbix amb Telegram per rebre alertes automàtiques quan es produeixen problemes en la infraestructura monitoritzada.
-
----
-
-## Índex
-
-1. [Crear el bot de Telegram amb BotFather](#1-crear-el-bot-de-telegram-amb-botfather)
-2. [Obtenir el token del bot](#2-obtenir-el-token-del-bot)
-3. [Cercar i iniciar el bot creat](#3-cercar-i-iniciar-el-bot-creat)
-4. [Crear el grup de notificacions](#4-crear-el-grup-de-notificacions)
-5. [Afegir el bot i IDBot al grup](#5-afegir-el-bot-i-idbot-al-grup)
-6. [Obtenir el Chat ID del grup](#6-obtenir-el-chat-id-del-grup)
-7. [Configurar el Media Type a Zabbix](#7-configurar-el-media-type-a-zabbix)
-8. [Provar el Media Type](#8-probar-el-media-type)
-9. [Verificar la recepció del missatge de prova](#9-verificar-la-recepció-del-missatge-de-prova)
-10. [Activar el Media Type a la llista](#10-activar-el-media-type-a-la-llista)
-11. [Configurar el medi a l'usuari](#11-configurar-el-medi-a-lusuari)
-12. [Afegir Telegram com a nou medi](#12-afegir-telegram-com-a-nou-medi)
-13. [Verificar els medis de l'usuari](#13-verificar-els-medis-de-lusuari)
-14. [Crear l'acció de trigger](#14-crear-lacció-de-trigger)
-15. [Configurar les operacions de l'acció](#15-configurar-les-operacions-de-lacció)
-16. [Verificar l'acció creada](#16-verificar-lacció-creada)
-17. [Comprovar problemes actius a Zabbix](#17-comprovar-problemes-actius-a-zabbix)
-18. [Rebre alertes al grup de Telegram](#18-rebre-alertes-al-grup-de-telegram)
-
----
+# Configuració de Notificacions de Zabbix via Telegram
 
 ## 1. Crear el bot de Telegram amb BotFather
 
@@ -43,7 +16,7 @@ Un cop iniciat BotFather, envia `/newbot`, tria un **nom** per al bot (ex: `zabb
 
 ![Creació del bot i obtenció del token](img/TL/T2.png)
 
-> ⚠️ Guarda el token de forma segura. En aquest exemple: `8783643633:AAHRXCVF-h0i9gU0mRoXbgpp0eqvXmZm9D8`
+> Guarda el token de forma segura. En aquest exemple: `8783643633:AAHRXCVF-h0i9gU0mRoXbgpp0eqvXmZm9D8`
 
 ---
 
@@ -192,28 +165,3 @@ Quan Zabbix detecta un problema de gravetat Alta o superior, el bot envia autom�
 > Cada missatge inclou: nom del problema, data i hora d'inici, host afectat, severitat, dades operacionals i ID del problema original.
 
 ---
-
-## Resum del flux
-
-```
-BotFather (Telegram)
-    └─► Crea bot + token
-            └─► Grup zabbix_notification + Chat ID
-                    └─► Zabbix Media Type (Webhook Telegram)
-                            └─► Medi d'usuari configurat
-                                    └─► Acció de trigger activa
-                                            └─► Alertes automàtiques al grup ✅
-```
-
----
-
-## Dades de referència
-
-| Paràmetre | Valor |
-|-----------|-------|
-| Bot username | `@aos_zabbix_bot` |
-| Nom del bot | `zabbix_notificationbot` |
-| Nom del grup | `zabbix_notification` |
-| Chat ID del grup | `-5254895121` |
-| Gravetat mínima d'alerta | Alta |
-| Horari d'activitat | 1-7, 00:00-24:00 |
