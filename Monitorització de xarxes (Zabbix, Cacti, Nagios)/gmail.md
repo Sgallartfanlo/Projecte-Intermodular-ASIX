@@ -33,7 +33,7 @@ La contrasenya generada té aquest format: `xxxx xxxx xxxx xxxx` (16 caràcters)
 
 **Imatge 3:** Llista de Tipus de Mitjans en Zabbix. Es mostren els tipus de notificació disponibles com Webhook, Discord, i Correu.
 
-### Pas 2: Creant Nou Tipus de Medi - Notificacions Gmail
+### Pas 2: Creant Nou Tipus de Mitjà - Notificacions Gmail
 
 ![Zabbix - Crear Notificacions Gmail](img/gmail/GM2.png)
 
