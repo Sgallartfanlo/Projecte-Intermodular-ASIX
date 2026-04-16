@@ -177,28 +177,13 @@ Camí: **Administració** → **Usuaris** → [Selecciona usuari] → **Mitjà**
 ### Pas 3: Afegint Nuevo Medio al Usuario
 
 ![Zabbix - Nou Mitjà per a l'Usuari](img/gmail/GM18.png)
-**Imatge 15:** Configuració d'un nou mitjà per a l'usuari:
 
-| Camp | Valor |
-|------|-------|
-| **Tipus** | Correu (HTML) |
-| **Enviar a** | s.gallart@sapalomera.cat |
-| **Quan està actiu** | 1-7,00:00-24:00 |
-| **Usar si la severitat** | Informativa, Advertència, Mitja, Alta, Crítica |
-| **Activat** | Sí |
+**Imatge 15:** Configuració d'un nou mitjà per a l'usuari:
 
 ### Pas 4: Confirmació de Medio Asignat
 
 ![Zabbix - Mitjà Assignat a l'Usuari](img/gmail/GM19.png)
 **Imatge 16:** Confirmació que el mitjà ha estat correctament assignat a l'usuari.
-
-Es mostra:
-- **Tipus:** Correu (HTML)
-- **Enviar a:** s.gallart@sapalomera.cat
-- **Quan està actiu:** 1-7,00:00-24:00
-- **Severitat:** N | I | A | P | A | C (Totes seleccionades)
-- **Estat:** Activat
-
 ---
 
 ## Fase 6: Verificación y Resultados
