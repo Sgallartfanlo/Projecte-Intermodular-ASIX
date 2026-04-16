@@ -31,7 +31,7 @@ Aquesta guia explica pas a pas com integrar Zabbix amb Telegram per rebre alerte
 
 Cerca **@BotFather** a Telegram (compte verificat amb el tick blau) i fes clic a **START** per iniciar la conversa.
 
-![Cercar BotFather a Telegram](img/gmail/T1.png)
+![Cercar BotFather a Telegram](img/TL/T1.png)
 
 > BotFather és el bot oficial de Telegram per crear i gestionar bots. Cal seleccionar el compte verificat `@BotFather`.
 
@@ -41,7 +41,7 @@ Cerca **@BotFather** a Telegram (compte verificat amb el tick blau) i fes clic a
 
 Un cop iniciat BotFather, envia `/newbot`, tria un **nom** per al bot (ex: `zabbix_notificationbot`) i un **username** que acabi en `_bot` (ex: `aos_zabbix_bot`). BotFather retornarà el **token HTTP API** necessari per a la integració.
 
-![Creació del bot i obtenció del token](img/gmail/T2.png)
+![Creació del bot i obtenció del token](img/TL/T2.png)
 
 > ⚠️ Guarda el token de forma segura. En aquest exemple: `8783643633:AAHRXCVF-h0i9gU0mRoXbgpp0eqvXmZm9D8`
 
@@ -51,7 +51,7 @@ Un cop iniciat BotFather, envia `/newbot`, tria un **nom** per al bot (ex: `zabb
 
 Cerca el bot pel seu username (`aos_zabbix_bot`) i fes clic a **START** per activar-lo.
 
-![Cercar i iniciar el bot nou](img/gmail/T3.png)
+![Cercar i iniciar el bot nou](img/TL/T3.png)
 
 ---
 
@@ -59,7 +59,7 @@ Cerca el bot pel seu username (`aos_zabbix_bot`) i fes clic a **START** per acti
 
 Crea un nou grup de Telegram anomenat **`zabbix_notification`**. Aquest grup rebrà totes les alertes de Zabbix.
 
-![Grup zabbix_notification creat](img/gmail/T4.png)
+![Grup zabbix_notification creat](img/TL/T4.png)
 
 > Telegram confirma la creació del grup i informa que pot tenir fins a 200.000 membres, historial persistent i administradors amb rols diferenciats.
 
@@ -69,7 +69,7 @@ Crea un nou grup de Telegram anomenat **`zabbix_notification`**. Aquest grup reb
 
 Des de la configuració del grup, afegeix el bot creat (`zabbix_notificationbot`) i també **@IDBot** (necessari per obtenir el Chat ID del grup).
 
-![Membres del grup amb el bot i IDBot afegits](img/gmail/T5.png)
+![Membres del grup amb el bot i IDBot afegits](img/TL/T5.png)
 
 > El grup ara té 3 membres: l'usuari propietari, `zabbix_notificationbot` i `IDBot`.
 
@@ -79,7 +79,7 @@ Des de la configuració del grup, afegeix el bot creat (`zabbix_notificationbot`
 
 Dins el grup, envia la comanda `/getgroupid@myidbot`. IDBot respondrà amb el **Chat ID** del grup (en format negatiu per a grups).
 
-![Obtenció del Chat ID del grup](img/gmail/T6.png)
+![Obtenció del Chat ID del grup](img/TL/T6.png)
 
 > En aquest exemple el Chat ID és: **`-5254895121`**. Cal el signe negatiu.
 
@@ -93,7 +93,7 @@ A Zabbix, ves a **Alertes → Tipus de medis** i obre el tipus **Telegram** (Web
 - `api_token`: el token del bot
 - `api_parse_mode`: mode de formatació del missatge
 
-![Configuració del Media Type Telegram a Zabbix](img/gmail/T7.png)
+![Configuració del Media Type Telegram a Zabbix](img/TL/T7.png)
 
 ---
 
@@ -101,7 +101,7 @@ A Zabbix, ves a **Alertes → Tipus de medis** i obre el tipus **Telegram** (Web
 
 Des del formulari del Media Type, fes clic a **Probar** i omple els camps de prova (per exemple, `alert_message: Hola Telegram`). Si la configuració és correcta, apareixerà el missatge **"Prueba de tipo de medio exitosa"**.
 
-![Prova del Media Type amb resultat exitós](img/gmail/T8.png)
+![Prova del Media Type amb resultat exitós](img/TL/T8.png)
 
 ---
 
@@ -109,7 +109,7 @@ Des del formulari del Media Type, fes clic a **Probar** i omple els camps de pro
 
 Comprova al grup de Telegram que el bot ha enviat correctament el missatge de prova.
 
-![Missatge de prova rebut al grup de Telegram](img/gmail/T9.png)
+![Missatge de prova rebut al grup de Telegram](img/TL/T9.png)
 
 > El bot `zabbix_notificationbot` ha enviat el missatge "Test / Hola Telegram" al grup, confirmant que la integració funciona.
 
@@ -119,7 +119,7 @@ Comprova al grup de Telegram que el bot ha enviat correctament el missatge de pr
 
 A la llista de **Tipus de medis**, confirma que **Telegram** apareix amb l'estat **Activado**.
 
-![Llista de Media Types amb Telegram activat](img/gmail/T10.png)
+![Llista de Media Types amb Telegram activat](img/TL/T10.png)
 
 ---
 
@@ -127,7 +127,7 @@ A la llista de **Tipus de medis**, confirma que **Telegram** apareix amb l'estat
 
 Ves a **Usuaris → Usuaris**, obre l'usuari administrador i accedeix a la pestanya **Medio**. Fes clic a **Agregar** per afegir Telegram com a medi de notificació.
 
-![Pestanya Medio de l'usuari administrador](img/gmail/T11.png)
+![Pestanya Medio de l'usuari administrador](img/TL/T11.png)
 
 ---
 
@@ -135,7 +135,7 @@ Ves a **Usuaris → Usuaris**, obre l'usuari administrador i accedeix a la pesta
 
 Selecciona el tipus **Telegram**, introdueix el Chat ID (`-5254895121`) al camp **Enviar a**, configura l'horari d'activitat i marca les gravetatss desitjades (Promedio, Alta, Crítica).
 
-![Formulari de nou medi Telegram per a l'usuari](img/gmail/T12.png)
+![Formulari de nou medi Telegram per a l'usuari](img/TL/T12.png)
 
 ---
 
@@ -143,7 +143,7 @@ Selecciona el tipus **Telegram**, introdueix el Chat ID (`-5254895121`) al camp 
 
 Confirma que l'usuari té ara dos medis configurats: **Email (HTML)** i **Telegram**, ambdós actius.
 
-![Llista de medis de l'usuari amb Email i Telegram](img/gmail/T13.png)
+![Llista de medis de l'usuari amb Email i Telegram](img/TL/T13.png)
 
 ---
 
@@ -151,7 +151,7 @@ Confirma que l'usuari té ara dos medis configurats: **Email (HTML)** i **Telegr
 
 Ves a **Alertes → Accions → Acciones de iniciador** i fes clic a **Crear acción**. Posa-li el nom `Trigger to Telegram` i afegeix la condició: *Gravedad del iniciador es mayor o igual Alta*.
 
-![Creació de l'acció Trigger to Telegram](img/gmail/T14.png)
+![Creació de l'acció Trigger to Telegram](img/TL/T14.png)
 
 ---
 
@@ -163,7 +163,7 @@ A la pestanya **Operaciones**, afegeix tres operacions d'enviament de missatge a
 - **Operació de recuperació**: envia missatge quan el problema es resol
 - **Operació d'actualització**: envia missatge en cas d'actualització
 
-![Operacions de l'acció configurades](img/gmail/T15.png)
+![Operacions de l'acció configurades](img/TL/T15.png)
 
 ---
 
@@ -171,7 +171,7 @@ A la pestanya **Operaciones**, afegeix tres operacions d'enviament de missatge a
 
 Comprova a la llista d'**Acciones de iniciador** que `Trigger to Telegram` apareix activa, amb la condició i les operacions correctes.
 
-![Llista d'accions amb Trigger to Telegram activa](img/gmail/T16.png)
+![Llista d'accions amb Trigger to Telegram activa](img/TL/T16.png)
 
 ---
 
@@ -179,7 +179,7 @@ Comprova a la llista d'**Acciones de iniciador** que `Trigger to Telegram` apare
 
 Al tauler de **Problemes** de Zabbix es visualitzen els incidents actius detectats (per exemple, agent no disponible, servei aturat, paquets instal·lats canviats).
 
-![Tauler de problemes actius a Zabbix](img/gmail/T17.png)
+![Tauler de problemes actius a Zabbix](img/TL/T17.png)
 
 ---
 
@@ -187,7 +187,7 @@ Al tauler de **Problemes** de Zabbix es visualitzen els incidents actius detecta
 
 Quan Zabbix detecta un problema de gravetat Alta o superior, el bot envia automàticament un missatge al grup `zabbix_notification` amb tota la informació de l'alerta.
 
-![Alertes de Zabbix rebudes al grup de Telegram](img/gmail/T18.png)
+![Alertes de Zabbix rebudes al grup de Telegram](img/TL/T18.png)
 
 > Cada missatge inclou: nom del problema, data i hora d'inici, host afectat, severitat, dades operacionals i ID del problema original.
 
