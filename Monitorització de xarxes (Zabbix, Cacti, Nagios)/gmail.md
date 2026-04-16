@@ -172,7 +172,7 @@ Algunes plantilles comunes inclouen:
 | zabbix_monitor | - | Rol super administrador | - | Activat |
 | zabbix_suport | - | Rol d'usuari | - | Activat |
 
-### Pas 2: Configurant Mitjàs del Usuari
+### Pas 2: Configurant el nou  mitjà al Usuari
 
 ![Zabbix - Mitjans de l'Usuari](img/gmail/GM17.png)
 
