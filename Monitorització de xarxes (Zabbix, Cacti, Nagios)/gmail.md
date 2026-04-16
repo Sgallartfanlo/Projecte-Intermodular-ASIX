@@ -5,6 +5,7 @@
 ### Pas 1: Accedint a les Contrasenyes d'Aplicació de Google
 
 ![Compte de Google - Contrasenyes d'Aplicació](img/gmail/GM3.png)
+
 **Imatge 1:** Pantalla de Contrasenyes d'Aplicació de Google. Aquí es mostren totes les contrasenyes generades per a aplicacions específiques.
 
 - Accedint a [Compte de Google](https://myaccount.google.com)
@@ -35,6 +36,7 @@ La contrasenya generada té aquest format: `xxxx xxxx xxxx xxxx` (16 caràcters)
 ### Pas 2: Creant Nou Tipus de Medi - Notificacions Gmail
 
 ![Zabbix - Crear Notificacions Gmail](img/gmail/GM2.png)
+
 **Imatge 4:** Configuració detallada del tipus de mitjà "Notificacions Gmail" amb els paràmetres SMTP necessaris:
 
 | Paràmetre | Valor |
@@ -65,6 +67,7 @@ La contrasenya generada té aquest format: `xxxx xxxx xxxx xxxx` (16 caràcters)
 ### Pas 4: Provant el Tipo de Mitjà
 
 ![Zabbix - Provar Notificacions Gmail](img/gmail/GM4.png)
+
 **Imatge 6:** Diàleg per provar el tipus de mitjà. Aquí es pot enviar un correu de prova per verificar que la configuració funciona correctament.
 
 - Fent clic al botó **"Provar"**
@@ -80,6 +83,7 @@ La contrasenya generada té aquest format: `xxxx xxxx xxxx xxxx` (16 caràcters)
 ### Pas 1: Accedint a Plantillas de Missatges
 
 ![Zabbix - Plantilles de Missatges](img/gmail/GM8.png)
+
 **Imatge 7:** Llista de Plantilles de Missatge disponibles. Aquestes plantilles defineixen el format del contingut dels correus d'alerta.
 
 ### Pas 2: Plantilles Disponibles
