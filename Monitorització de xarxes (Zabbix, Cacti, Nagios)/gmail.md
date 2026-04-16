@@ -176,7 +176,7 @@ Algunes plantilles comunes inclouen:
 
 - Fent clic a **"Afegir"**
 
-### Pas 3: Afegint Nuevo Mitjà al Usuari
+### Pas 3: Afegint Nou Mitjà al Usuari
 
 ![Zabbix - Nou Mitjà per a l'Usuari](img/gmail/GM18.png)
 
