@@ -26,7 +26,7 @@ La contrasenya generada té aquest format: `xxxx xxxx xxxx xxxx` (16 caràcters)
 
 ## Fase 2: Configuració de Zabbix - Tipus de Mitjans
 
-### Pas 1: Accedint a Tipus de Medi
+### Pas 1: Accedint a Tipus de Mitjà
 
 ![Zabbix - Tipus de Mitjans](img/gmail/GM1.png)
 
