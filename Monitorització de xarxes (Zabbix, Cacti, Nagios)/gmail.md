@@ -187,6 +187,7 @@ Algunes plantilles comunes inclouen:
 ![Zabbix - Mitjà Assignat a l'Usuari](img/gmail/GM19.png)
 
 **Imatge 16:** Confirmació que el mitjà ha estat correctament assignat a l'usuari.
+
 ---
 
 ## Fase 6: Verificación y Resultados
@@ -194,6 +195,7 @@ Algunes plantilles comunes inclouen:
 ### Pas 1: Email de Prova Rebut
 
 ![Gmail - Correu de Prova Rebut](img/gmail/GM5.png)
+
 **Imatge 17:** Correu de prova rebut en Gmail. Mostra el missatge de prova enviat des de Zabbix:
 
 - **De:** s.gallart@sapalomera.cat
@@ -203,6 +205,7 @@ Algunes plantilles comunes inclouen:
 ### Pas 2: Monitoritzant Problemes Detectats
 
 ![Zabbix - Problemes Detectats](img/gmail/GM21.png)
+
 **Imatge 18:** Pantalla de Problemes en Zabbix mostrant els events detectats:
 
 - **Problema 1:** "Windows: Les comprovacions actives no estan disponibles"
