@@ -32,8 +32,6 @@ La contrasenya generada té aquest format: `xxxx xxxx xxxx xxxx` (16 caràcters)
 
 **Imatge 3:** Llista de Tipus de Mitjans en Zabbix. Es mostren els tipus de notificació disponibles com Webhook, Discord, i Correu.
 
-Camí: **Alertes** → **Tipus de mitjans**
-
 ### Pas 2: Creant Nou Tipus de Medi - Notificacions Gmail
 
 ![Zabbix - Crear Notificacions Gmail](img/gmail/GM2.png)
@@ -84,8 +82,6 @@ Camí: **Alertes** → **Tipus de mitjans**
 ![Zabbix - Plantilles de Missatges](img/gmail/GM8.png)
 **Imatge 7:** Llista de Plantilles de Missatge disponibles. Aquestes plantilles defineixen el format del contingut dels correus d'alerta.
 
-Camí: **Alertes** → **Tipus de mitjans** → **Notificacions Gmail** → **Plantilles de missatges**
-
 ### Pas 2: Plantilles Disponibles
 
 Algunes plantilles comunes inclouen:
@@ -107,8 +103,6 @@ Algunes plantilles comunes inclouen:
 ![Zabbix - Accions de Disparador](img/gmail/GM9.png)
 
 **Imatge 8:** Llista de Accions de Disparador en Zabbix. Aquestes accions defineixen què fer quan es detecta un problema.
-
-Camí: **Alertes** → **Accions** → **Accions de disparador**
 
 ### Pas 2: Creant Nova Acció
 
@@ -174,17 +168,15 @@ Camí: **Alertes** → **Accions** → **Accions de disparador**
 | zabbix_monitor | - | Rol super administrador | - | Activat |
 | zabbix_suport | - | Rol d'usuari | - | Activat |
 
-### Pas 2: Configurant Mitjàs del Usuario
+### Pas 2: Configurant Mitjàs del Usuari
 
 ![Zabbix - Mitjans de l'Usuari](img/gmail/GM17.png)
 
 **Imatge 14:** Configuració de Mitjans de l'usuari. Aquí es defineix com l'usuari rebrà les notificacions.
 
-Camí: **Administració** → **Usuaris** → [Selecciona usuari] → **Mitjà**
-
 - Fent clic a **"Afegir"**
 
-### Pas 3: Afegint Nuevo Mitjà al Usuario
+### Pas 3: Afegint Nuevo Mitjà al Usuari
 
 ![Zabbix - Nou Mitjà per a l'Usuari](img/gmail/GM18.png)
 
