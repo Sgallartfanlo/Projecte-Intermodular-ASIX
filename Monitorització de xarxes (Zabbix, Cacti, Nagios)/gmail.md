@@ -23,16 +23,16 @@ La contrasenya generada té aquest format: `xxxx xxxx xxxx xxxx` (16 caràcters)
 
 ---
 
-## Fase 2: Configuració de Zabbix - Tipos de Medios
+## Fase 2: Configuració de Zabbix - Tipus de Mitjans
 
-### Pas 1: Accedint a Tipos de Medios
+### Pas 1: Accedint a Tipus de Medi
 
 ![Zabbix - Tipus de Mitjans](img/gmail/GM1.png)
 **Imatge 3:** Llista de Tipus de Mitjans en Zabbix. Es mostren els tipus de notificació disponibles com Webhook, Discord, i Correu.
 
 Camí: **Alertes** → **Tipus de mitjans**
 
-### Pas 2: Creant Nuevo Tipo de Medio - Notificacions Gmail
+### Pas 2: Creant Nou Tipus de Medi - Notificacions Gmail
 
 ![Zabbix - Crear Notificacions Gmail](img/gmail/GM2.png)
 **Imatge 4:** Configuració detallada del tipus de mitjà "Notificacions Gmail" amb els paràmetres SMTP necessaris:
@@ -52,7 +52,7 @@ Camí: **Alertes** → **Tipus de mitjans**
 | **Contrasenya** | [Contrasenya d'aplicació de Google] |
 | **Format de missatge** | HTML |
 
-### Pas 3: Verificant Tipo de Medio Activado
+### Pas 3: Verificant Tipus de Mitjà Activat
 
 ![Zabbix - Tipus de Mitjà Activat](img/gmail/GM7.png)
 **Imatge 5:** Confirmació que el tipus de mitjà "Notificacions Gmail" està activat i correctament configurat. Es mostra el servidor SMTP i altres paràmetres essencials.
@@ -74,9 +74,9 @@ Camí: **Alertes** → **Tipus de mitjans**
 
 ---
 
-## Fase 3: Plantillas de Mensaje
+## Fase 3: Plantilles de Missatge
 
-### Pas 1: Accedint a Plantillas de Mensajes
+### Pas 1: Accedint a Plantillas de Missatges
 
 ![Zabbix - Plantilles de Missatges](img/gmail/GM8.png)
 **Imatge 7:** Llista de Plantilles de Missatge disponibles. Aquestes plantilles defineixen el format del contingut dels correus d'alerta.
@@ -92,8 +92,8 @@ Algunes plantilles comunes inclouen:
 | **Problema** | Plantilla per a problemes detectats |
 | **Recuperació del problema** | Plantilla per a recuperació de problemes |
 | **Actualització del problema** | Plantilla per a actualitzacions d'estat |
-| **Descobriment** | Plantella per a descobriments de nous equips |
-| **Autorregistre** | Plantella per a registres automàtics |
+| **Descobriment** | Plantilla per a descobriments de nous equips |
+| **Autorregistre** | Plantilla per a registres automàtics |
 
 ---
 
@@ -281,10 +281,6 @@ Connexió: STARTTLS
 Usuari: el_teu_email@gmail.com
 Contrasenya: xxxx xxxx xxxx xxxx (generada des del Compte de Google)
 ```
-
-### Alternatives:
-Si necessites usar OAuth en lloc de contrasenya d'aplicació, consulta la documentació oficial de Zabbix.
-
 ---
 
 ## Recursos Útils
