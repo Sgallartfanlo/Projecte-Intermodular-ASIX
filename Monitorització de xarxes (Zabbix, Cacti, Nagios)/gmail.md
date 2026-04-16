@@ -97,9 +97,9 @@ Algunes plantilles comunes inclouen:
 
 ---
 
-## Fase 4: Configuración de Acciones
+## Fase 4: Configuració d'accions
 
-### Pas 1: Accedint a Acciones
+### Pas 1: Accedint a Accions
 
 ![Zabbix - Accions de Disparador](img/gmail/GM9.png)
 **Imatge 8:** Llista de Accions de Disparador en Zabbix. Aquestes accions defineixen què fer quan es detecta un problema.
