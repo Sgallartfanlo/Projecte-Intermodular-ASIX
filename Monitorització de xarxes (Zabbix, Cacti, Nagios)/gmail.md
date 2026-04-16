@@ -151,9 +151,9 @@ Camí: **Alertes** → **Accions** → **Accions de disparador**
 
 ---
 
-## Fase 5: Usuarios y Permisos
+## Fase 5: Usuaris y Permisos
 
-### Pas 1: Accedint a Usuarios
+### Pas 1: Accedint a Usuaris
 
 ![Zabbix - Gestió d'Usuaris](img/gmail/GM16.png)
 **Imatge 13:** Llista d'Usuaris en Zabbix. Es mostra la taula amb tots els usuaris registrats:
