@@ -183,6 +183,7 @@ Camí: **Administració** → **Usuaris** → [Selecciona usuari] → **Mitjà**
 ### Pas 4: Confirmació de Medio Asignat
 
 ![Zabbix - Mitjà Assignat a l'Usuari](img/gmail/GM19.png)
+
 **Imatge 16:** Confirmació que el mitjà ha estat correctament assignat a l'usuari.
 ---
 
