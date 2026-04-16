@@ -1,36 +1,5 @@
 # Configuració d'Alertes de Gmail a Zabbix
 
-Guia completa per configurar notificacions d'alertes de **Zabbix** via **Gmail** usando SMTP. Aquesta documentació inclou tots els passos necessaris des de la configuració de Google Account fins a la verificació final de les alertes.
-
----
-
-## Índex
-1. [Introducció](#introducció)
-2. [Fase 1: Configuració de Google Account](#fase-1-configuració-de-google-account)
-3. [Fase 2: Configuració de Zabbix - Tipos de Medios](#fase-2-configuració-de-zabbix---tipos-de-medios)
-4. [Fase 3: Plantillas de Mensaje](#fase-3-plantillas-de-mensaje)
-5. [Fase 4: Configuración de Acciones](#fase-4-configuración-de-acciones)
-6. [Fase 5: Usuarios y Permisos](#fase-5-usuarios-y-permisos)
-7. [Fase 6: Verificación y Resultados](#fase-6-verificación-y-resultados)
-
----
-
-## Introducció
-
-Aquesta guia explica com configurar **Zabbix 7.4.7** per enviar alertes via correo electrònic usando l'SMTP de Gmail. El procés requereix:
-- Una compte de Google amb autenticació de doble factor
-- Una contrasenya d'aplicació de Google
-- Configuració correcta del servidor SMTP de Gmail
-- Creació de tipus de medios, plantillas i acciones a Zabbix
-
-**Avantatges:**
-- Notificacions en temps real
-- Fàcil configuració
-- Seguretat via OAuth i contrasenyes d'aplicació
-- Compatible amb Gmail gratuït
-
----
-
 ## Fase 1: Configuració de Google Account
 
 ### Pas 1: Accedint a les Contrasenyes d'Aplicació de Google
