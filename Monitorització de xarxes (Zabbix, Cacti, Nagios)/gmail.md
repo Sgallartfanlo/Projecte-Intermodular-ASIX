@@ -114,7 +114,7 @@ Camí: **Alertes** → **Accions** → **Accions de disparador**
 - **Nom:** "Reportar problemes als administradors de Zabbix"
 - **Condicions:** Es pot deixar buit o afegir condicions específiques
 
-### Pas 3: Operacions de la Acción
+### Pas 3: Operacions de la Acció
 
 ![Zabbix - Operacions Detallades](img/gmail/GM13.png)
 **Imatge 10:** Configuració de les Operacions de l'acció. S'especifica la durada predeterminada i les operacions a executar.
