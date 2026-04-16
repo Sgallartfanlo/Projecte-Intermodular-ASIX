@@ -61,7 +61,7 @@ Camí: **Alertes** → **Tipus de mitjans**
 - Tots els paràmetres han de ser correctes
 - Es pot veure el "Servidor SMTP" confirmant la configuració
 
-### Pas 4: Provant el Tipo de Medio
+### Pas 4: Provant el Tipo de Mitjà
 
 ![Zabbix - Provar Notificacions Gmail](img/gmail/GM4.png)
 **Imatge 6:** Diàleg per provar el tipus de mitjà. Aquí es pot enviar un correu de prova per verificar que la configuració funciona correctament.
@@ -165,7 +165,7 @@ Camí: **Alertes** → **Accions** → **Accions de disparador**
 | zabbix_monitor | - | Rol super administrador | - | Activat |
 | zabbix_suport | - | Rol d'usuari | - | Activat |
 
-### Pas 2: Configurant Medios del Usuario
+### Pas 2: Configurant Mitjàs del Usuario
 
 ![Zabbix - Mitjans de l'Usuari](img/gmail/GM17.png)
 **Imatge 14:** Configuració de Mitjans de l'usuari. Aquí es defineix com l'usuari rebrà les notificacions.
@@ -174,13 +174,13 @@ Camí: **Administració** → **Usuaris** → [Selecciona usuari] → **Mitjà**
 
 - Fent clic a **"Afegir"**
 
-### Pas 3: Afegint Nuevo Medio al Usuario
+### Pas 3: Afegint Nuevo Mitjà al Usuario
 
 ![Zabbix - Nou Mitjà per a l'Usuari](img/gmail/GM18.png)
 
 **Imatge 15:** Configuració d'un nou mitjà per a l'usuari:
 
-### Pas 4: Confirmació de Medio Asignat
+### Pas 4: Confirmació de Mitjà Asignat
 
 ![Zabbix - Mitjà Assignat a l'Usuari](img/gmail/GM19.png)
 
@@ -189,7 +189,7 @@ Camí: **Administració** → **Usuaris** → [Selecciona usuari] → **Mitjà**
 
 ## Fase 6: Verificación y Resultados
 
-### Pas 1: Email de Prueba Rebut
+### Pas 1: Email de Prova Rebut
 
 ![Gmail - Correu de Prova Rebut](img/gmail/GM5.png)
 **Imatge 17:** Correu de prova rebut en Gmail. Mostra el missatge de prova enviat des de Zabbix:
