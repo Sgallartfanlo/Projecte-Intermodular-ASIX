@@ -15,6 +15,7 @@
 ### Pas 2: Aplicació Gmail (Zabbix)
 
 ![Compte de Google - Contrasenya per a Zabbix](img/gmail/GM3.png)
+
 **Imatge 2:** La contrasenya generada per a l'aplicació Zabbix es mostra en aquesta pantalla. Guardant aquesta contrasenya de forma segura.
 
 La contrasenya generada té aquest format: `xxxx xxxx xxxx xxxx` (16 caràcters)
@@ -28,6 +29,7 @@ La contrasenya generada té aquest format: `xxxx xxxx xxxx xxxx` (16 caràcters)
 ### Pas 1: Accedint a Tipus de Medi
 
 ![Zabbix - Tipus de Mitjans](img/gmail/GM1.png)
+
 **Imatge 3:** Llista de Tipus de Mitjans en Zabbix. Es mostren els tipus de notificació disponibles com Webhook, Discord, i Correu.
 
 Camí: **Alertes** → **Tipus de mitjans**
@@ -55,6 +57,7 @@ Camí: **Alertes** → **Tipus de mitjans**
 ### Pas 3: Verificant Tipus de Mitjà Activat
 
 ![Zabbix - Tipus de Mitjà Activat](img/gmail/GM7.png)
+
 **Imatge 5:** Confirmació que el tipus de mitjà "Notificacions Gmail" està activat i correctament configurat. Es mostra el servidor SMTP i altres paràmetres essencials.
 
 - L'estat ha de ser **Activat**
@@ -102,6 +105,7 @@ Algunes plantilles comunes inclouen:
 ### Pas 1: Accedint a Accions
 
 ![Zabbix - Accions de Disparador](img/gmail/GM9.png)
+
 **Imatge 8:** Llista de Accions de Disparador en Zabbix. Aquestes accions defineixen què fer quan es detecta un problema.
 
 Camí: **Alertes** → **Accions** → **Accions de disparador**
@@ -109,6 +113,7 @@ Camí: **Alertes** → **Accions** → **Accions de disparador**
 ### Pas 2: Creant Nova Acció
 
 ![Zabbix - Nova Acció](img/gmail/GM10.png)
+
 **Imatge 9:** Pantalla de creació d'una nova acció. Es configura el nom i les condicions per a la declanxació de l'acció.
 
 - **Nom:** "Reportar problemes als administradors de Zabbix"
@@ -117,22 +122,25 @@ Camí: **Alertes** → **Accions** → **Accions de disparador**
 ### Pas 3: Operacions de la Acció
 
 ![Zabbix - Operacions Detallades](img/gmail/GM13.png)
+
 **Imatge 10:** Configuració de les Operacions de l'acció. S'especifica la durada predeterminada i les operacions a executar.
 
 ### Pas 4: Configurant Envío de Mensaje
 
 ![Zabbix - Detalls de l'Operació](img/gmail/GM14.png)
+
 **Imatge 11:** Configuració detallada de l'operació d'enviament de missatge:
 
 - **Operació:** "Enviar missatge"
 - **Enviar a grups d'usuaris:** [Selecciona grup]
 - **Enviar a usuaris:** Admin (Administrador de Zabbix)
 - **Enviar a tipus de mitjà:** Correu (HTML)
-- **Missatge personalitzat:** [desmarcado]
+- **Missatge personalitzat:** [Desmarcat]
 
 ### Pas 5: Operaciones de Recuperación
 
 ![Zabbix - Accions Avançades](img/gmail/GM15.png)
+
 **Imatge 12:** Configuració d'operacions addicionals:
 
 **Operacions:**
@@ -156,6 +164,7 @@ Camí: **Alertes** → **Accions** → **Accions de disparador**
 ### Pas 1: Accedint a Usuaris
 
 ![Zabbix - Gestió d'Usuaris](img/gmail/GM16.png)
+
 **Imatge 13:** Llista d'Usuaris en Zabbix. Es mostra la taula amb tots els usuaris registrats:
 
 | Usuari | Nom | Rol | Grups | Estat |
@@ -168,6 +177,7 @@ Camí: **Alertes** → **Accions** → **Accions de disparador**
 ### Pas 2: Configurant Mitjàs del Usuario
 
 ![Zabbix - Mitjans de l'Usuari](img/gmail/GM17.png)
+
 **Imatge 14:** Configuració de Mitjans de l'usuari. Aquí es defineix com l'usuari rebrà les notificacions.
 
 Camí: **Administració** → **Usuaris** → [Selecciona usuari] → **Mitjà**
