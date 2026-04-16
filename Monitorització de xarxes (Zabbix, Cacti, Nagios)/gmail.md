@@ -119,10 +119,6 @@ Camí: **Alertes** → **Accions** → **Accions de disparador**
 ![Zabbix - Operacions Detallades](img/gmail/GM13.png)
 **Imatge 10:** Configuració de les Operacions de l'acció. S'especifica la durada predeterminada i les operacions a executar.
 
-| Configuració | Valor |
-|-------------|-------|
-| **Durada predeterminada del pas de l'operació** | 1h |
-
 ### Pas 4: Configurant Envío de Mensaje
 
 ![Zabbix - Detalls de l'Operació](img/gmail/GM14.png)
