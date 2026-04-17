@@ -2,8 +2,6 @@
 nano /opt/scriptBackupZabbix.sh
 
 #!/bin/bash
-
-
 # Variables de configuració
 DB_USER="My_User"
 DB_PASSWORD="My_Password"
