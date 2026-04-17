@@ -1,0 +1,26 @@
+# Documentació de Configuració Zabbix - Notificacions Plantilla
+
+Aquest repositori conté la configuració de les plantilles i alertes de Zabbix per al 
+## Captures de la Configuració
+
+A continuació es detallen els passos realitzats, amb les imatges ubicades a la carpeta `img/Plantilla/`.
+
+### 1. Llistat de Plantilles
+Es mostra la creació de la nova plantilla personalitzada per a les proves de monitoratge.
+![Llistat de plantilles](img/Plantilla/PL1.png)
+
+### 2. Monitoratge del Port HTTP (Port 80)
+Configuració de l'item per verificar si el port 80 (TCP) està actiu mitjançant una comprovació senzilla.
+![Configuració Item Port 80](img/Plantilla/PL2.png)
+
+### 3. Alerta de Port Caigut
+Definició de l'iniciador (trigger) que s'activa quan el servei HTTP no respon. Gravetat: **Alta**.
+![Trigger Port 80](img/Plantilla/PL3.png)
+
+### 4. Monitoratge del Procés CMD
+Configuració per comptar el nombre d'instàncies de l'executable `cmd.exe` que s'estan executant al sistema Windows.
+![Configuració Item CMD](img/Plantilla/PL4.png)
+
+### 5. Alerta de Procés no detectat
+Trigger configurat per saltar si el procés `cmd.exe` no s'està executant (valor igual a 0). Gravetat: **Advertència**.
+![Trigger CMD](img/Plantilla/PL5.png)
