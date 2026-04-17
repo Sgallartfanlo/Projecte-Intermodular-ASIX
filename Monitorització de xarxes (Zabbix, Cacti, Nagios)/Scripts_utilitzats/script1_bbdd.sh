@@ -1,4 +1,4 @@
-- Crear script:
+#Crear script:
 nano /opt/scriptBackupZabbix.sh
 
 #!/bin/bash
@@ -29,7 +29,7 @@ if [ $? -eq 0 ]; then
     echo "$OLD_BACKUPS" | xargs rm
   fi
 
- # Comand per copiar la còpia de seguretat a la unitat muntada
+ # Comanda per copiar la còpia de seguretat a la unitat muntada
  # cp $BACKUP_FILE "$BACKUP_DIR/zabbix_backup_latest.sql"
 
   # Verificar si la còpia va ser exitosa
@@ -52,7 +52,7 @@ mkdir /mnt/Backup
 - Editar fstab per establir el punt de muntatge:
 nano /etc/fstab
 
-- Enganxa la següent línia editant els paràmetres segons correspongui:
+- Enganxar la següent línia editant els paràmetres segons correspongui:
 //IP_server/Folder_Shared /mnt/Backup_Folder_Name/ cifs rw,username=backup,password=094cf20512fffc80cd*,uid=root,gid=root 0 0
 
 - Muntar la carpeta compartida:
