@@ -41,26 +41,26 @@ else
 fi
 
 
-- Donar permisos d'execució al script:
+#Donar permisos d'execució al script:
 chmod +x /opt/scriptBackupZabbix.sh
 
-- Crear carpeta dins de /mnt/
+#rear carpeta dins de /mnt/
 mkdir /mnt/Backup
 
-- Editar fstab per establir el punt de muntatge:
+#Editar fstab per establir el punt de muntatge:
 nano /etc/fstab
 
-- Enganxa la següent línia editant els paràmetres segons correspongui:
+#Enganxar la següent línia editant els paràmetres segons correspongui:
 //IP_server/Folder_Shared /mnt/Backup_Folder_Name/ cifs rw,username=backup,password=094cf20512fffc80cd*,uid=root,gid=root 0 0
 
-- Muntar la carpeta compartida:
+#Muntar la carpeta compartida:
 mount -a
 
-- Editar Cron per crear una tasca automàtica
+#Editar Cron per crear una tasca automàtica
 crontab -e
 
-- Exemple de Cron, editar segons les teves necessitats:
+#Exemple de Cron, editar segons les teves necessitats:
 0 2 * * * /opt/scriptBackupZabbix.sh
 
-- Reiniciar Cron perquè apliqui els canvis:
+#Reiniciar Cron perquè apliqui els canvis:
 /etc/init.d/cron restart
